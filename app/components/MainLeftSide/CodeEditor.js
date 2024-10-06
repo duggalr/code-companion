@@ -2,7 +2,7 @@ import { useState } from "react";
 import Editor from "@monaco-editor/react";
 
 const CodeEditor = () => {
-    const [editorCode, setEditorCode] = useState("\n\n\n\n");
+    const [editorCode, setEditorCode] = useState("\ndef hello_world():\n    return 'Hello World'\n\nhello_world()\n");
 
     const handleEditorDidMount = (editor, monaco) => {
         // Define a modern, minimalistic light theme
