@@ -3,14 +3,13 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "fastapi-dev": "pip3 install -r requirements.txt && python3 -m uvicorn api.index:app --reload",
     "next-dev": "next dev",
-    "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "npm run next-dev"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@monaco-editor/react": "^4.6.0",
     "@types/node": "22.5.5",
     "@types/react": "18.3.8",
     "@types/react-dom": "18.3.0",
@@ -20,8 +19,11 @@
     "eslint-config-next": "13.4.4",
     "next": "^14.2.13",
     "postcss": "^8.4.47",
+    "pyodide": "^0.26.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-resizable": "^3.0.5",
+    "skulpt": "^1.2.0",
     "tailwindcss": "3.4.12",
     "typescript": "5.6.2"
   }

@@ -37,3 +37,7 @@ next-env.d.ts
 # python
 __pycache__/
 venv
+
+# environment variables
+.env
+.env.local
