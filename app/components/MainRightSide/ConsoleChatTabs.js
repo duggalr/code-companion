@@ -56,7 +56,7 @@ const ConsoleChatTabs = ({ consoleOutput }) => {
               <li class="me-2">
                   <a 
                   // class="inline-block p-0 px-6 pb-2 pt-3 text-gray-700 border-b-2 border-gray-300 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 cursor-pointer"
-                  className={`inline-block p-0 px-6 pb-2 pt-3 text-gray-700 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 cursor-pointer ${activeTab === "console" ? "border-b-2 border-gray-300" : ""}`}
+                  className={`inline-block p-0 px-6 pb-2 pt-3 text-gray-500 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 cursor-pointer ${activeTab === "console" ? "border-b-2 border-gray-300 text-gray-700 " : ""}`}
                   aria-current="page"
                   onClick={() => setActiveTab("console")}
                   >
@@ -65,7 +65,7 @@ const ConsoleChatTabs = ({ consoleOutput }) => {
               </li>
               <li class="me-2">
                   <a
-                  class={`inline-block p-0 px-6 pb-2 pt-3 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 cursor-pointer ${activeTab === "chat" ? "border-b-2 border-gray-300" : ""}`}
+                  class={`inline-block p-0 px-6 pb-2 pt-3 rounded-t-lg text-gray-500 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 cursor-pointer ${activeTab === "chat" ? "border-b-2 border-gray-300 text-gray-700" : ""}`}
                   onClick={() => setActiveTab("chat")}
                   >
                     Chat
