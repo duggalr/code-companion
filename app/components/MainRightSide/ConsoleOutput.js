@@ -40,17 +40,17 @@ const ConsoleOutput = ({ output }) => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut est lorem. 
         </span> */}
 
-
+        {/* Console Output Box */}
         <span className="text-gray-400 text-xs pt-3 pl-1 pb-0 tracking-normal">
           <span className="font-bold">
             Note:
           </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </span>
-        {/* Console Output Box */}
+        
         <div
-        // h-1/4 flex-grow 
+          // h-1/4 flex-grow 
           // className="h-1/2 overflow-y-auto p-4 border border-gray-300 dark:border-gray-600 bg-gray-150 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md">
-          className="mt-2 pt-0 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 bg-gray-100 text-gray-900"
+          className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 bg-gray-100 text-gray-900"
         >
           {output ? (
             <pre className="whitespace-pre-wrap break-words">{output}</pre>

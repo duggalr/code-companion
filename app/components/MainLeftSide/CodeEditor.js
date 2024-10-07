@@ -19,15 +19,29 @@ const CodeEditor = () => {
                 { token: 'type', foreground: '2ECC71' }, // green for types/classes
             ],
             colors: {
-                'editor.background': '#F9FAFB', // soft white background (#F9FAFB)
-                'editor.foreground': '#2C3E50', // dark slate text color
-                'editorLineNumber.foreground': '#BDC3C7', // light gray for line numbers
-                'editorCursor.foreground': '#E74C3C', // modern red for the cursor
-                'editor.selectionBackground': '#D6EAF8', // subtle blue selection
-                'editor.inactiveSelectionBackground': '#EBF5FB', // even lighter blue for inactive selection
-                'editor.lineHighlightBackground': '#ECF0F1', // light gray for line highlight
-                'editorBracketMatch.background': '#AED6F1', // soft blue for matching brackets
-                'editorWhitespace.foreground': '#EAECEE', // faint gray for whitespaces
+                // 'editor.background': '#F9FAFB', // soft white background (#F9FAFB)
+                
+                // 'editor.background': '#ECECEC',
+                // 'editor.foreground': '#2C3E50', // dark slate text color
+                // 'editorLineNumber.foreground': '#BDC3C7', // light gray for line numbers
+                // 'editorCursor.foreground': '#E74C3C', // modern red for the cursor
+                // 'editor.selectionBackground': '#D6EAF8', // subtle blue selection
+                // 'editor.inactiveSelectionBackground': '#EBF5FB', // even lighter blue for inactive selection
+                // 'editor.lineHighlightBackground': '#ECF0F1', // light gray for line highlight
+                // 'editorBracketMatch.background': '#AED6F1', // soft blue for matching brackets
+                // 'editorWhitespace.foreground': '#EAECEE', // faint gray for whitespaces
+
+                // 'editor.background': '#efefef', // Light gray background for contrast
+
+                'editor.background': '#efefef', // Light gray background for contrast
+                'editor.foreground': '#2C3E50', // Darker text for clarity
+                'editorLineNumber.foreground': '#95A5A6', // Light gray for line numbers
+                'editorCursor.foreground': '#E74C3C', // Red cursor for better visibility
+                'editor.selectionBackground': '#D6EAF8', // Subtle blue for selection
+                'editor.inactiveSelectionBackground': '#EBF5FB', // Lighter blue for inactive selection
+                'editor.lineHighlightBackground': '#e7eaeb', // Light gray for line highlight
+                'editorBracketMatch.background': '#82E0AA', // Light green for bracket matching
+                'editorWhitespace.foreground': '#D5D8DC', // Faint gray for whitespaces
             }
         });
 

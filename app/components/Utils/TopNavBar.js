@@ -14,7 +14,6 @@ export default function TopNavBar () {
         // className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-700 dark:border-gray-700 dark:text-gray-400 bg-white dark:bg-neutral-900 pl-2 pr-4">
         <ul
             className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b-2 border-gray-300"
-            // style={{ backgroundColor: "#F5F5F5" }}
             style={{ backgroundColor: "#F5F5F5" }}
         >
             <li>
