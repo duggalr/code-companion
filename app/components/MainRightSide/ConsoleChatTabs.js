@@ -38,16 +38,36 @@ const ConsoleChatTabs = ({ consoleOutput }) => {
         </button>
       </div> */}
 
+        {/* <button
+          // className={`px-4 py-2 text-sm font-medium ${
+          //   activeTab === "chat" ? "bg-white text-gray-900" : "text-gray-500"
+          // } hover:bg-white focus:outline-none`}
+          className={`px-6 py-3 text-sm font-medium ${
+            activeTab === "chat" ? "border-b-2 border-gray-300" : ""
+          } hover:bg-gray-200 focus:outline-none`}
+          onClick={() => setActiveTab("chat")}
+        >
+          Chat
+        </button> */}
+
       {/* Tab Menu */}
       <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
           <ul class="flex flex-wrap -mb-px">
               <li class="me-2">
-                  <a href="" class="inline-block p-0 px-6 pb-2 pt-3 text-gray-700 border-b-2 border-gray-300 rounded-t-lg active dark:text-blue-500 dark:border-blue-500" aria-current="page">
+                  <a 
+                  // class="inline-block p-0 px-6 pb-2 pt-3 text-gray-700 border-b-2 border-gray-300 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 cursor-pointer"
+                  className={`inline-block p-0 px-6 pb-2 pt-3 text-gray-700 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 cursor-pointer ${activeTab === "console" ? "border-b-2 border-gray-300" : ""}`}
+                  aria-current="page"
+                  onClick={() => setActiveTab("console")}
+                  >
                     Console
                   </a>
               </li>
               <li class="me-2">
-                  <a href="" class="inline-block p-0 px-6 pb-2 pt-3 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                  <a
+                  class={`inline-block p-0 px-6 pb-2 pt-3 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 cursor-pointer ${activeTab === "chat" ? "border-b-2 border-gray-300" : ""}`}
+                  onClick={() => setActiveTab("chat")}
+                  >
                     Chat
                   </a>
               </li>
@@ -58,7 +78,7 @@ const ConsoleChatTabs = ({ consoleOutput }) => {
       {/* bg-white dark:bg-gray-800 */}
       <div className="flex-grow overflow-auto">
         {activeTab === "console" && <ConsoleOutput output={consoleOutput} />}
-        {/* {activeTab === "chat" && <ChatInterface />} */}
+        {activeTab === "chat" && <ChatInterface />}
       </div>
 
     </div>

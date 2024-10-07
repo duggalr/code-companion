@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
+
 const ChatInterface = () => {
   // Initial messages with some placeholder text
   const [messages] = useState([

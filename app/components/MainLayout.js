@@ -31,7 +31,7 @@ const MainLayout = () => {
             handle={
                 // className="w-2 bg-gray-500 hover:bg-gray-700 cursor-ew-resize h-full absolute right-0 top-0 group-hover:w-4 transition-all duration-300 flex items-center justify-center"
                 <div
-                    className="w-[3px] bg-blue-300 hover:bg-gray-600 cursor-ew-resize h-full absolute right-0 top-0 group-hover:w-4 transition-all duration-300 flex items-center justify-center"
+                    className="w-[4px] bg-blue-300 hover:bg-blue-500 cursor-ew-resize h-full absolute right-0 top-0 group-hover:w-4 transition-all duration-300 flex items-center justify-center"
                     style={{ touchAction: "none" }}
                 >
                 {/* <FontAwesomeIcon
