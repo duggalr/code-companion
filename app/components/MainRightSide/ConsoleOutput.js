@@ -55,7 +55,7 @@ const ConsoleOutput = ({ output }) => {
           {output ? (
             <pre className="whitespace-pre-wrap break-words">{output}</pre>
           ) : (
-            <p className="text-gray-400 pt-2 pl-1 text-[14px]">
+            <p className="text-gray-400 pt-2 pl-1 text-[14px] tracking-normal">
               <span className="text-blue-400">&gt;&gt;</span> console output will appear here...
             </p>
             // <div>
