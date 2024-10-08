@@ -22,21 +22,20 @@ export default function ThemeToggle() {
   }, []);
 
   const toggleTheme = () => {
-    if (theme === 'light') {
-      document.documentElement.classList.remove('light');
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      setTheme('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-      localStorage.setItem('theme', 'light');
-      setTheme('light');
-    }
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+
+    document.documentElement.classList.remove(theme);
+    document.documentElement.classList.add(newTheme);
+
+    // Update local storage
+    localStorage.setItem('theme', newTheme);
+    setTheme(newTheme);
+
+    // Broadcast theme change event
+    window.dispatchEvent(new CustomEvent('themeChange', { detail: newTheme }));
   };
 
   return (
-    // dark:bg-gray-800
     <button
       onClick={toggleTheme}
       className="pt-0 pr-4 rounded-full text-gray-900 dark:text-gray-100 focus:outline-none transition-colors duration-300"

@@ -50,6 +50,11 @@ export default function TopNavBar () {
                     /> */}
                     about
                 </a>
+
+                <a href="https://github.com/duggalr/code-companion" className="p-2.5 pr-4 text-black font-normal dark:text-gray-300 text-[14px]">
+                    github
+                </a>
+
                 {/* <a href="#" className="p-2.5 text-black dark:text-gray-400">
                     Link 2
                 </a> */}
