@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrain, faCircleInfo, faCode, faLaptopCode } from '@fortawesome/free-solid-svg-icons';
+import { faBrain, faCircleInfo, faCode, faInfo, faLaptopCode } from '@fortawesome/free-solid-svg-icons';
 import ThemeToggle from './ThemeToggle';
 
 
@@ -48,10 +48,20 @@ export default function TopNavBar () {
                         size="sm"
                         className="pr-1 pl-2"
                     /> */}
+                    {/* <FontAwesomeIcon 
+                        icon={faInfo}
+                        size="sm"
+                        className="pr-2 pl-0"
+                    /> */}
                     about
                 </a>
 
                 <a href="https://github.com/duggalr/code-companion" className="p-2.5 pr-4 text-black font-normal dark:text-gray-300 text-[14px]">
+                    {/* <FontAwesomeIcon 
+                        icon={faGithub}
+                        size="sm"
+                        className="pr-2 pl-0"
+                    /> */}
                     github
                 </a>
 
