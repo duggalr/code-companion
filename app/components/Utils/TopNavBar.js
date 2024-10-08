@@ -23,6 +23,7 @@ export default function TopNavBar () {
         <ul
             // className="flex flex-wrap text-sm font-medium text-center border-b-2 border-gray-300 bg-[#F5F5F5] dark:bg-gray-900 dark:text-gray-300"
             className="flex flex-wrap text-sm font-medium text-center border-b-2 border-gray-300 bg-[#F3F4F6] dark:bg-gray-900 dark:text-gray-300"
+            // className="flex flex-wrap text-sm font-medium text-center border-b-2 border-gray-300 bg-[#eff0f3] dark:bg-gray-900 dark:text-gray-300"
         >
                 
             <li>

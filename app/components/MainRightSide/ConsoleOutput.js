@@ -46,7 +46,7 @@ const ConsoleOutput = ({ output }) => {
 
 
         {/* Console Output Box */}
-        <span className="text-gray-500 text-xs pt-3 pl-1 pb-2 tracking-normal">
+        <span className="text-gray-500 dark:text-gray-400 text-xs pt-3 pl-1 pb-2 tracking-normal">
           <span className="font-bold">
             Note:
           </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -64,7 +64,7 @@ const ConsoleOutput = ({ output }) => {
           {output ? (
             <pre className="whitespace-pre-wrap break-words">{output}</pre>
           ) : (
-            <p className="text-gray-400 dark:text-gray-500 pt-2 pl-1 text-[14px] tracking-normal">
+            <p className="text-gray-400 dark:text-gray-500 pt-2 pl-1 text-[14px] tracking-normal font-normal">
               <span className="text-blue-400">&gt;&gt;</span> console output will appear here...
             </p>
             // <div>

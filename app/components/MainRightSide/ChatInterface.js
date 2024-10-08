@@ -33,7 +33,13 @@ const ChatInterface = () => {
     // bg-gray-100
     <div className="flex flex-col h-4/5 dark:bg-gray-900 p-4">
       
-      <span className="text-gray-400 text-xs pt-1 pl-1 pb-2 tracking-normal">
+      {/* <span className="text-gray-400 text-xs pt-1 pl-1 pb-2 tracking-normal">
+        <span className="font-bold">
+          Note:
+        </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </span> */}
+
+      <span className="text-gray-500 dark:text-gray-400 text-xs pt-1 pl-1 pb-4 tracking-normal">
         <span className="font-bold">
           Note:
         </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -72,7 +78,7 @@ const ChatInterface = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           // className="text-[14px] flex-grow resize-none p-3 bg-gray-100 dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2"
-          className="text-[14px] flex-grow resize-none p-3 bg-[#F3F4F6] dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 mr-2"
+          className="text-[14px] flex-grow resize-none p-3 bg-[#F3F4F6] dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 mr-2"
           placeholder="type a message..."
           rows={1} // Keep the textarea at one row
         />
