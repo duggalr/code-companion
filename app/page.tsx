@@ -17,7 +17,8 @@ export default function Home() {
 
     return (
        
-        <main className="bg-white">
+        //  className="bg-white"
+        <main>
 
             <TopNavBar />
             <MainLayout />

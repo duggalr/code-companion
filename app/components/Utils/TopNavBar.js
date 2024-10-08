@@ -12,17 +12,25 @@ export default function TopNavBar () {
 
         // <ul
         // className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-700 dark:border-gray-700 dark:text-gray-400 bg-white dark:bg-neutral-900 pl-2 pr-4">
+        
+// <ul
+        //     className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b-2 border-gray-300 bg-[#F5F5F5] dark:text-gray-300 dark:border-gray-600 dark:bg-gray-800"
+        // >
+
+        // style={{ backgroundColor: "#F5F5F5" }}
+
+        // text-gray-500 
         <ul
-            className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b-2 border-gray-300"
-            style={{ backgroundColor: "#F5F5F5" }}
+            className="flex flex-wrap text-sm font-medium text-center border-b-2 border-gray-300 bg-[#F5F5F5] dark:bg-gray-900 dark:text-gray-300"
         >
+                
             <li>
                 {/* className="inline-block pt-2.5 pl-2 rounded-t-lg text-[16px] text-black dark:text-gray-100 cursor-pointer tracking-normal" */}
                 <a
                 href=""
                 // className="inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[16px] text-black cursor-pointer tracking-tight"
-                className="inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[16px] cursor-pointer tracking-tight"
-                style={{ color: "#2E2E2E" }}
+                className="inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[16px] cursor-pointer tracking-tight "
+                // style={{ color: "#2E2E2E" }}
                 // style={{ color: "black" }}
                 >
                     <FontAwesomeIcon
@@ -34,7 +42,7 @@ export default function TopNavBar () {
                 </a>
             </li>
             <div className="ml-auto flex items-center space-x-6">
-                <a href="#" className="p-2.5 text-black font-normal dark:text-gray-400 text-[14px]">
+                <a href="#" className="p-2.5 text-black font-normal dark:text-gray-300 text-[14px]">
                     {/* <FontAwesomeIcon
                         icon={faCircleInfo}
                         size="sm"

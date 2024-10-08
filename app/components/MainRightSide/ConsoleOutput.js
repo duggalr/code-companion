@@ -21,7 +21,10 @@ const ConsoleOutput = ({ output }) => {
       // bg-white
       // dark:bg-gray-800 
       // <div className="flex flex-col h-full p-4 space-y-4 mt-0" style={{ backgroundColor: "#f3f3f3" }}>
-      <div className="flex flex-col h-full mt-2 ml-4" style={{ backgroundColor: "#f3f3f3" }}>
+      <div 
+        className="flex flex-col h-full mt-2 ml-4 bg-[#f3f3f3] dark:bg-gray-900"
+        // style={{ backgroundColor: "#f3f3f3" }}
+      >
         
         {/* Run Button */}
         {/* <button

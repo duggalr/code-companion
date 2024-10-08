@@ -16,7 +16,8 @@ const MainLayout = () => {
   
         // f5f5f5
         // f3f3f3
-      <div className="flex h-screen pt-0" style={{ backgroundColor: "#f3f3f3" }}>
+      <div className="flex h-screen pt-0">
+        {/* style={{ backgroundColor: "#f3f3f3" }} */}
         
         {/* Left Side */}
         <ResizableBox
