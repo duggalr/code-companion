@@ -46,7 +46,7 @@ const MainLayout = () => {
         </ResizableBox>
   
         {/* Right Side */}
-        <div className="flex flex-col flex-1 h-full">
+        <div className="flex flex-col flex-1 h-full bg-[#F5F5F5] dark:bg-gray-900">
             <ConsoleChatTabs consoleOutput={consoleOutput} />
         </div>
   

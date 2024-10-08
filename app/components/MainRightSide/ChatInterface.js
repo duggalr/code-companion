@@ -31,7 +31,7 @@ const ChatInterface = () => {
   return (
 
     // bg-gray-100
-    <div className="flex flex-col h-4/5 dark:bg-gray-800 p-4">
+    <div className="flex flex-col h-4/5 dark:bg-gray-900 p-4">
       
       <span className="text-gray-400 text-xs pt-1 pl-1 pb-2 tracking-normal">
         <span className="font-bold">
@@ -41,8 +41,10 @@ const ChatInterface = () => {
 
       {/* Messages area with border */}
       <div
-      className="flex-grow overflow-y-auto p-4 space-y-3 border border-gray-300 dark:border-gray-600 rounded-xl"
-      style={{ backgroundColor: "#f3f3f3" }}>
+      // dark:border-gray-600
+      className="flex-grow overflow-y-auto p-4 space-y-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-[#f3f3f3] dark:bg-gray-800"
+      // style={{ backgroundColor: "#f3f3f3" }}
+      >
         {messages.length > 0 ? (
           messages.map((msg, idx) => (
             <div
@@ -68,7 +70,7 @@ const ChatInterface = () => {
         <textarea
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="text-[14px] flex-grow resize-none p-3 bg-gray-100 dark:bg-gray-700 dark:text-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2"
+          className="text-[14px] flex-grow resize-none p-3 bg-gray-100 dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2"
           placeholder="type a message..."
           rows={1} // Keep the textarea at one row
         />
