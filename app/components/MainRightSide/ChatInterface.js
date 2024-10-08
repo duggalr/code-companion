@@ -42,7 +42,8 @@ const ChatInterface = () => {
       {/* Messages area with border */}
       <div
       // dark:border-gray-600
-      className="flex-grow overflow-y-auto p-4 space-y-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-[#f3f3f3] dark:bg-gray-800"
+      // className="flex-grow overflow-y-auto p-4 space-y-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-[#f3f3f3] dark:bg-gray-800"
+      className="flex-grow overflow-y-auto p-4 space-y-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-[#F3F4F6] dark:bg-gray-800"
       // style={{ backgroundColor: "#f3f3f3" }}
       >
         {messages.length > 0 ? (
@@ -70,7 +71,8 @@ const ChatInterface = () => {
         <textarea
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="text-[14px] flex-grow resize-none p-3 bg-gray-100 dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2"
+          // className="text-[14px] flex-grow resize-none p-3 bg-gray-100 dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2"
+          className="text-[14px] flex-grow resize-none p-3 bg-[#F3F4F6] dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 mr-2"
           placeholder="type a message..."
           rows={1} // Keep the textarea at one row
         />

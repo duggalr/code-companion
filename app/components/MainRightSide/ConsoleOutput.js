@@ -22,7 +22,8 @@ const ConsoleOutput = ({ output }) => {
       // dark:bg-gray-800 
       // <div className="flex flex-col h-full p-4 space-y-4 mt-0" style={{ backgroundColor: "#f3f3f3" }}>
       <div 
-        className="flex flex-col h-full mt-2 ml-4 bg-[#f3f3f3] dark:bg-gray-900"
+        // className="flex flex-col h-full mt-2 ml-4 bg-[#f3f3f3] dark:bg-gray-900"
+        className="flex flex-col h-full mt-2 ml-4 bg-[#F3F4F6] dark:bg-gray-900"
         // style={{ backgroundColor: "#f3f3f3" }}
       >
         
@@ -43,10 +44,9 @@ const ConsoleOutput = ({ output }) => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut est lorem. 
         </span> */}
 
-{/* TODO: fix active link bug in dark mode and go from there */}
 
         {/* Console Output Box */}
-        <span className="text-gray-400 text-xs pt-3 pl-1 pb-0 tracking-normal">
+        <span className="text-gray-500 text-xs pt-3 pl-1 pb-2 tracking-normal">
           <span className="font-bold">
             Note:
           </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -57,7 +57,9 @@ const ConsoleOutput = ({ output }) => {
           // className="h-1/2 overflow-y-auto p-4 border border-gray-300 dark:border-gray-600 bg-gray-150 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md">
           // className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 bg-gray-100 dark:bg-gray-300 text-gray-900"
           // bg-gray-100
-          className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 dark:border-gray-600 bg-[#f3f3f3] dark:bg-gray-800 text-gray-900"
+
+          // className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 dark:border-gray-600 bg-[#f3f3f3] dark:bg-gray-800 text-gray-900"
+          className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 dark:border-gray-600 bg-[#f4f5f6] dark:bg-gray-800 text-gray-900"
         >
           {output ? (
             <pre className="whitespace-pre-wrap break-words">{output}</pre>
