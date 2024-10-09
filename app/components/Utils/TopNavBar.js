@@ -44,7 +44,7 @@ export default function TopNavBar () {
                 </a>
             </li>
             <div className="ml-auto flex items-center space-x-6">
-                <a href="#" className="p-2.5 text-black font-normal dark:text-gray-300 text-[14px]">
+                {/* <a href="#" className="p-2.5 text-black font-normal dark:text-gray-300 text-[14px]"> */}
                     {/* <FontAwesomeIcon
                         icon={faCircleInfo}
                         size="sm"
@@ -55,8 +55,8 @@ export default function TopNavBar () {
                         size="sm"
                         className="pr-2 pl-0"
                     /> */}
-                    about
-                </a>
+                    {/* about
+                </a> */}
 
                 <a href="https://github.com/duggalr/code-companion" className="p-2.5 pr-4 text-black font-normal dark:text-gray-300 text-[14px]">
                     {/* <FontAwesomeIcon 

@@ -28,12 +28,12 @@ export default function HeroNavBar() {
 
                 {/* Right - Links */}
                 <div className="flex space-x-10">
-                    <a
+                    {/* <a
                         href=""
                         className="text-gray-600 hover:text-gray-800 dark:text-gray-300 text-sm"
                     >
                         about
-                    </a>
+                    </a> */}
                     <a
                         href="https://github.com/duggalr/code-companion"
                         target="_blank"
