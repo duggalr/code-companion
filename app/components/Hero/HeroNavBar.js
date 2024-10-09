@@ -7,7 +7,8 @@ import SparklesText from "@/components/ui/sparkles-text";
 export default function HeroNavBar() {
     return (
 
-        <nav className="bg-white dark:bg-gray-900 p-4">
+        <nav className="p-4 dark:bg-zinc-950">
+            
             <div className="container mx-auto flex justify-between items-center">
                 {/* Left - Logo */}
                 {/* <div className="text-lg font-bold"> */}
@@ -20,10 +21,10 @@ export default function HeroNavBar() {
                     Code Companion
                 </h2> */}
 
-                {/* <h1 className="scroll-m-20 text-[19px] font-semibold tracking-tight">
+                <h1 className="scroll-m-20 text-[19px] font-semibold tracking-tight">
                     Code Companion
-                </h1> */}
-                <SparklesText text="Code Companion" />
+                </h1>
+                {/* <SparklesText text="Code Companion" /> */}
 
                 {/* Right - Links */}
                 <div className="flex space-x-10">
@@ -44,6 +45,7 @@ export default function HeroNavBar() {
                     <ThemeToggle />
                 </div>
             </div>
+
         </nav>
         
     );

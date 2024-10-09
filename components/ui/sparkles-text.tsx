@@ -106,8 +106,8 @@ const SparklesText: React.FC<SparklesTextProps> = ({
 
   return (
     <div
-      // className={cn("text-[49px] font-bold tracking-normal mt-0", className)}
-      className={cn("scroll-m-20 text-[22px] font-normal tracking-tight", className)}
+      className={cn("text-[49px] font-bold tracking-normal mt-0", className)}
+      // className={cn("scroll-m-20 text-[22px] font-normal tracking-tight", className)}
       {...props}
       style={
         {

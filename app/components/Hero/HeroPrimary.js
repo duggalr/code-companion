@@ -11,6 +11,7 @@ export default function HeroPrimary() {
   return (
     
     // bg-gray-50
+    // bg-faint-lines
     <section className="min-h-screen flex flex-col items-center py-16 px-4">
 
         {/* <BackgroundBeams /> */}
@@ -27,7 +28,19 @@ export default function HeroPrimary() {
         </p>
         </BackgroundLines> */}
 
-        <div className="max-w-4xl mx-auto text-center mt-0"> {/* Added margin to avoid overlap with Navbar */}
+
+        {/* <div class="relative bg-white bg-faint-lines h-screen">
+            <div class="relative z-10 flex flex-col items-center justify-center h-full text-black">
+                <h1 class="text-5xl font-bold">Online REPL with an AI Tutor</h1>
+                <p class="text-gray-600 mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <a href="#" class="mt-6 btn btn-primary">Visit IDE</a>
+            </div>
+        </div> */}
+
+
+
+
+        <div className="max-w-4xl mx-auto text-center mt-0 "> {/* Added margin to avoid overlap with Navbar */}
             
             {/* TODO: test */}
             {/* <div className="max-w-2xl mx-auto p-4">
@@ -52,16 +65,22 @@ export default function HeroPrimary() {
             {/* <h1 className="scroll-m-20 text-[49px] font-bold tracking-tight mt-0">
                 Online REPL with an AI Tutor
             </h1> */}
-            {/* <SparklesText text="Online REPL with an AI Tutor" /> */}
+            <SparklesText text="Online REPL with an AI Tutor" />
 
             {/* <BackgroundLines className="flex items-center justify-center w-full flex-col px-4"> */}
 
-            <BackgroundLines>
+            {/* <BackgroundLines>
                 <h1 className="scroll-m-20 text-[49px] font-bold tracking-tight mt-0">
                     Online REPL with an AI Tutor
                 </h1>
-            </BackgroundLines>
+            </BackgroundLines> */}
+
             {/* </BackgroundLines> */}
+
+
+            {/* <h1 className="scroll-m-20 text-[49px] font-bold tracking-tight mt-0">
+                Online REPL with an AI Tutor
+            </h1> */}
 
             <p className="text-[21px] text-muted-foreground pt-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet nulla mauris.
