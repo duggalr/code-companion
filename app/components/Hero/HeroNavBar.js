@@ -21,7 +21,7 @@ export default function HeroNavBar() {
                     Code Companion
                 </h2> */}
 
-                <h1 className="scroll-m-20 text-[19px] font-semibold tracking-tight">
+                <h1 className="scroll-m-20 text-[20px] font-semibold tracking-tight">
                     Code Companion
                 </h1>
                 {/* <SparklesText text="Code Companion" /> */}
@@ -30,7 +30,7 @@ export default function HeroNavBar() {
                 <div className="flex space-x-10">
                     <a
                         href=""
-                        className="text-gray-600 hover:text-gray-800 text-sm"
+                        className="text-gray-600 hover:text-gray-800 dark:text-gray-300 text-sm"
                     >
                         about
                     </a>
@@ -38,7 +38,7 @@ export default function HeroNavBar() {
                         href="https://github.com/duggalr/code-companion"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-gray-800 text-sm"
+                        className="text-gray-600 hover:text-gray-800 dark:text-gray-300 text-sm"
                     >
                         github
                     </a>

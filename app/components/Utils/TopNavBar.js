@@ -29,7 +29,7 @@ export default function TopNavBar () {
             <li>
                 {/* className="inline-block pt-2.5 pl-2 rounded-t-lg text-[16px] text-black dark:text-gray-100 cursor-pointer tracking-normal" */}
                 <a
-                href=""
+                href="http://localhost:3000/landing"
                 // className="inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[16px] text-black cursor-pointer tracking-tight"
                 className="inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[16px] cursor-pointer tracking-tight "
                 // style={{ color: "#2E2E2E" }}
