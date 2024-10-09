@@ -101,7 +101,12 @@ module.exports = {
   					transform: 'translateY(0)'
   				}
   			}
-  		}
+  		},
+		fontFamily: {
+			inter: ['Inter', 'sans-serif'],
+        	dancing: ['Dancing Script', 'cursive'],
+			caveat: ['Caveat', 'cursive'],
+		},
   	}
   },
 

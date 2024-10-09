@@ -1,7 +1,9 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Dancing_Script, Caveat } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
+const dancing_script = Dancing_Script({ subsets: ["latin"] });
+const caveat_font = Caveat({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
