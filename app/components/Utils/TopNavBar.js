@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain, faCircleInfo, faCode, faInfo, faLaptopCode } from '@fortawesome/free-solid-svg-icons';
 import ThemeToggle from './ThemeToggle';
+import { Pacifico } from 'next/font/google';
+
+const pacifico_font = Pacifico({
+    subsets: ['latin'],
+    weight: ['400']
+});
 
 
 export default function TopNavBar () {
@@ -31,14 +37,16 @@ export default function TopNavBar () {
                 <a
                 href="http://localhost:3000/landing"
                 // className="inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[16px] text-black cursor-pointer tracking-tight"
-                className="inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[16px] cursor-pointer tracking-tight "
+                
+                // className="inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[16px] cursor-pointer tracking-tight "
+                className={`${pacifico_font.className} inline-block pt-2.5 pl-2 pb-2 rounded-t-lg text-[17px] cursor-pointer tracking-widest`}
                 // style={{ color: "#2E2E2E" }}
                 // style={{ color: "black" }}
                 >
                     <FontAwesomeIcon
                         icon={faLaptopCode}
                         size="sm"
-                        className="pr-1 pl-2"
+                        className="pr-2 pl-2"
                     />
                     Code Companion
                 </a>
