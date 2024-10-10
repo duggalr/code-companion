@@ -4,11 +4,12 @@ import { faPaperPlane, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 
 const ChatInterface = () => {
+  
   // Initial messages with some placeholder text
-  const [messages] = useState([
+  const [messages, setMessages] = useState([
     { text: "Hello, how can I help you?", sender: "bot" },
-    { text: "I have a question about the console.", sender: "user" },
-    { text: "Sure! Ask away.", sender: "bot" },
+    // { text: "I have a question about the console.", sender: "user" },
+    // { text: "Sure! Ask away.", sender: "bot" },
     // { text: "How do I run Python code here?", sender: "user" },
     // { text: "You can type it in the editor and press the 'Run' button.", sender: "bot" }
   ]);
@@ -20,11 +21,70 @@ const ChatInterface = () => {
     // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+
+  const [ws, setWs] = useState(null);
+
+  useEffect(() => {
+
+    // Create WebSocket connection
+    const socket = new WebSocket('ws://127.0.0.1:8000/ws_handle_chat_response');
+
+    socket.onopen = () => {
+        console.log('WebSocket connection established');
+    };
+
+    // TODO: 
+    socket.onmessage = (event) => {
+        const message = event.data;
+        console.log('Received message:', message);
+
+        // Check if the message indicates the model is done
+        if (message === "MODEL_GEN_COMPLETE") {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { text: generatedMessage, sender: "bot" }, // Final generated message
+          ]);
+          setGeneratedMessage(""); // Clear the generated message state
+        } else {
+          setGeneratedMessage((prevMessage) => prevMessage + message + " "); // Concatenate new message part
+        }
+
+        // if (message === 'MODEL_GEN_COMPLETE') {
+        //     setMessages((prevMessages) => [...prevMessages, { text: 'Generation complete!', sender: 'bot' }]);
+        // } else {
+        //     setMessages((prevMessages) => [...prevMessages, { text: message, sender: 'bot' }]);
+        // }
+    };
+
+    socket.onclose = () => {
+        console.log('WebSocket connection closed');
+    };
+
+    setWs(socket);
+
+    return () => {
+        socket.close();  // Clean up the WebSocket connection on unmount
+    };
+
+  }, []);
+
+  
+  // const handleSendMessage = () => {
+  //   if (inputValue.trim() !== "") {
+  //     // Add a new user message (this is just for UI demonstration)
+  //     messages.push({ text: inputValue, sender: "user" });
+  //     setInputValue("");
+  //   }
+  // };
+
   const handleSendMessage = () => {
-    if (inputValue.trim() !== "") {
-      // Add a new user message (this is just for UI demonstration)
-      messages.push({ text: inputValue, sender: "user" });
-      setInputValue("");
+    if (inputValue.trim() !== "" && ws) {
+        const newMessage = { text: inputValue, sender: 'user', type: 'user_message' };
+        console.log('message:', newMessage);
+
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        ws.send(JSON.stringify(newMessage));
+        setInputValue("");
     }
   };
 
@@ -97,7 +157,6 @@ const ChatInterface = () => {
       </div>
 
     </div>
-    
 
   );
 };
