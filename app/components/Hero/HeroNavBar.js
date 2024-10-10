@@ -7,7 +7,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 
 import ThemeToggle from "../Utils/ThemeToggle";
+import { Irish_Grover, Dancing_Script, Caveat } from 'next/font/google'
+ 
+const irish_grover_font = Irish_Grover({ 
+    subsets: ['latin'],
+    weight: ['400']
+})
 
+const dancing_script_font = Dancing_Script({
+    subsets: ['latin'],
+    weight: ['400'],
+})
+
+const caveat_font = Caveat({
+    subsets: ['latin'],
+    weight: ['400']
+})
 
 // TODO: start here by finalizing the current UI (likely icons and favicon and images, etc...)
 // proceed to adding all functionality
@@ -43,14 +58,23 @@ export default function HeroNavBar() {
                 </h1> */}
                 {/* <Image src={`/code_two.png`} width="22" height="22" alt="icon" className="mr-2" /> */}
 
-                {/* TODO: */}
-                <h1 className="scroll-m-20 text-[27px] font-semibold tracking-wider font-caveat flex items-center text-zinc-900 dark:text-gray-200">
-                    <FontAwesomeIcon
+                {/* TODO: start here <-- **really get the functionality started tonight after finalizing the UI stuff first */}
+                {/* <h1 className="scroll-m-20 text-[27px] font-semibold tracking-wider font-caveat flex items-center text-zinc-900 dark:text-gray-200"> */}
+                <h1 className={`${dancing_script_font.className} scroll-m-20 text-[27px] font-semibold tracking-widest flex items-center text-zinc-900 dark:text-gray-200`}>
+                    {/* <FontAwesomeIcon
                         icon={faCode}
                         className="pr-3 text-[23px] dark:text-gray-200 w-[40px]"
-                    />
+                    /> */}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" className="w-8 h-8 pr-2 fill-zinc-900 dark:fill-white">
+                        <path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/>
+                    </svg>
                     Code Companion
                 </h1>
+
+                {/* TODO: finalize font here and proceed from there to finalizing all UI and on to functinoality */}
+                <p className={irish_grover_font.className}>Code Companion</p>
+                <h1 className={dancing_script_font.className}>Code Companion</h1>
+                <p className={caveat_font.className}>Code Companion</p>
                 
                 {/* <h2 className="font-dancing text-5xl font-bold uppercase">
                     Hello World!

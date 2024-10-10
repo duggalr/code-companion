@@ -102,11 +102,6 @@ module.exports = {
   				}
   			}
   		},
-		fontFamily: {
-			inter: ['Inter', 'sans-serif'],
-        	dancing: ['Dancing Script', 'cursive'],
-			caveat: ['Caveat', 'cursive'],
-		},
   	}
   },
 

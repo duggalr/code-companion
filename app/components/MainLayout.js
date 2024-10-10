@@ -7,12 +7,6 @@ import Skulpt from "skulpt";
 import CodeEditor from './MainLeftSide/CodeEditor';
 import ConsoleChatTabs from "./MainRightSide/ConsoleChatTabs";
 
-// TODO:
-    // start here with finalizing dark and light mode (*light needs work*)
-    // proceed to adding/finalizing the name, logo, favicon
-    // proceed to creating a landing + about page
-    // go from there
-
 
 const MainLayout = () => {
     const [leftWidth, setLeftWidth] = useState(window.innerWidth / 2); // Initial width for editor
