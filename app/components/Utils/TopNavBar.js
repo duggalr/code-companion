@@ -55,8 +55,6 @@ export default function TopNavBar () {
                     Code Companion
                 </a> */}
 
-                {/* TODO: start here by adding all core functionality and getting this complete */}
-
                 <a
                 href="http://localhost:3000/landing"
                 className={`${pacifico_font.className} scroll-m-20 text-[18px] mt-1 ml-3 tracking-widest flex items-center text-zinc-900 dark:text-gray-300`}>
