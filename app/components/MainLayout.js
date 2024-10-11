@@ -10,7 +10,10 @@ import ConsoleChatTabs from "./MainRightSide/ConsoleChatTabs";
 
 const MainLayout = () => {
     const [leftWidth, setLeftWidth] = useState(window.innerWidth / 2); // Initial width for editor
-    const [consoleOutput, setConsoleOutput] = useState("");
+    // const [consoleOutput, setConsoleOutput] = useState("");
+
+    // TODO: parent state
+    const [editorCode, setEditorCode] = useState("\ndef hello_world():\n    return 'Hello World'\n\nhello_world()\n");
   
     return (
   
@@ -42,7 +45,7 @@ const MainLayout = () => {
                 </div>
             }
         >
-            <CodeEditor />
+            <CodeEditor codeState={editorCode} setCodeState={setEditorCode} />
         </ResizableBox>
   
         {/* Right Side */}
@@ -50,7 +53,7 @@ const MainLayout = () => {
             // className="flex flex-col flex-1 h-full bg-[#F5F5F5] dark:bg-gray-900"
             className="flex flex-col flex-1 h-full bg-[#F3F4F6] dark:bg-gray-900"
         >
-            <ConsoleChatTabs consoleOutput={consoleOutput} />
+            <ConsoleChatTabs codeState={editorCode} />
         </div>
   
       </div>

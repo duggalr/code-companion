@@ -4,7 +4,8 @@ import ChatInterface from "./ChatInterface";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal, faComments } from '@fortawesome/free-solid-svg-icons';
 
-const ConsoleChatTabs = ({ consoleOutput }) => {
+
+const ConsoleChatTabs = ({ codeState }) => {
   const [activeTab, setActiveTab] = useState("console");
 
   return (
@@ -50,7 +51,7 @@ const ConsoleChatTabs = ({ consoleOutput }) => {
       {/* Content */}
       {/* bg-white dark:bg-gray-800 */} {/* <div className="flex-grow overflow-auto"> */}
       <div className="flex-grow overflow-y-scroll no-scrollbar">
-        {activeTab === "console" && <ConsoleOutput output={consoleOutput} />}
+        {activeTab === "console" && <ConsoleOutput codeState={codeState} />}
         {activeTab === "chat" && <ChatInterface />}
       </div>
       

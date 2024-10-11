@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 
-const CodeEditor = () => {
-    const [editorCode, setEditorCode] = useState("\ndef hello_world():\n    return 'Hello World'\n\nhello_world()\n");
+// TODO:
+    // setup such that we are sharing states;
+      // first, do for running the python code and go from there...
+
+const CodeEditor = ({ codeState, setCodeState }) => {
+
+    // const [editorCode, setEditorCode] = useState("\ndef hello_world():\n    return 'Hello World'\n\nhello_world()\n");
 
     const handleEditorDidMount = (editor, monaco) => {
         // Define the light theme
@@ -30,30 +35,6 @@ const CodeEditor = () => {
             //     'editorBracketMatch.background': '#82E0AA', 
             //     'editorWhitespace.foreground': '#D5D8DC', 
             // }
-           
-            // base: 'vs-dark', // inherit from vs-dark (dark theme)
-            // inherit: true,
-            // rules: [
-            //     { token: 'comment', foreground: '6A737D', fontStyle: 'italic' }, 
-            //     { token: 'keyword', foreground: '569CD6' }, 
-            //     { token: 'identifier', foreground: 'D4D4D4' }, 
-            //     { token: 'string', foreground: 'CE9178' }, 
-            //     { token: 'number', foreground: 'B5CEA8' }, 
-            //     { token: 'delimiter', foreground: '808080' }, 
-            //     { token: 'type', foreground: '4EC9B0' }, 
-            // ],
-            // colors: {
-            //     'editor.background': '#1E1E1E', 
-            //     'editor.foreground': '#D4D4D4', 
-            //     'editorLineNumber.foreground': '#858585', 
-            //     'editorCursor.foreground': '#AEAFAD', 
-            //     'editor.selectionBackground': '#264F78', 
-            //     'editor.inactiveSelectionBackground': '#2C2C2C', 
-            //     'editor.lineHighlightBackground': '#2D2D30', 
-            //     'editorBracketMatch.background': '#515A6B', 
-            //     'editorWhitespace.foreground': '#3B3B3B', 
-            // }
-
 
             base: 'vs-dark', // inherit from vs-dark (dark theme)
             inherit: true,
@@ -155,13 +136,13 @@ const CodeEditor = () => {
                 height="100%"
                 width="100%"
                 defaultLanguage="python"
-                value={editorCode}
+                value={codeState}
                 options={{
                     minimap: { enabled: false },
                     scrollBeyondLastLine: false,
                     selectOnLineNumbers: true,
                 }}
-                onChange={(value) => setEditorCode(value ?? "")}
+                onChange={(value) => setCodeState(value ?? "")}
                 onMount={handleEditorDidMount} // Hook into editor lifecycle
             />
         </div>

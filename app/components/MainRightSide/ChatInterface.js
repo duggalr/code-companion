@@ -77,6 +77,11 @@ const ChatInterface = () => {
   //   }
   // };
 
+  // TODO:
+    // First --> implement running the python code
+    // Then --> implement the message sending
+    // Then --> all finalizations from there
+
   const handleSendMessage = () => {
     if (inputValue.trim() !== "" && ws) {
         const newMessage = { text: inputValue, sender: 'user', type: 'user_message' };

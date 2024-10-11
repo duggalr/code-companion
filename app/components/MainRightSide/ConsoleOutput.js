@@ -1,14 +1,73 @@
+"use client";  // Add this at the top
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios';
 
 
-const ConsoleOutput = ({ output }) => {
+const ConsoleOutput = ({ codeState }) => {
 
-    // const [output, setOutput] = useState(""); // To hold the output of the code
+    const [output, setOutput] = useState(""); // To hold the output of the code
 
-    // Simulate running the code and getting an output
+    const [pyodide, setPyodide] = useState(null);
+  
+    // // Load Pyodide asynchronously
+    // useEffect(() => {
+    //   const loadPyodide = async () => {
+    //     const pyodide = await window.loadPyodide();
+    //     setPyodide(pyodide);
+    //   };
+    //   loadPyodide();
+    // }, []);
+
+    // Load Pyodide asynchronously
+    useEffect(() => {
+      console.log('current-window:', window);
+
+      // const loadPyodide = async () => {
+      //   const pyodideModule = await import('https://cdn.jsdelivr.net/pyodide/v0.26.2/full/');
+      //   const pyodideInstance = await pyodideModule.loadPyodide();
+      //   setPyodide(pyodideInstance);
+      // };
+      // loadPyodide();
+    }, []);
+
+    // // Leveraging Pyodide: https://pyodide.org/en/stable/
+    // const _runPython = async (python_code) => {
+    //   if (pyodide) {
+    //     console.log('pyodide:', pyodide);
+    //     try {
+    //       // Run the Python code in Pyodide and update the output
+    //       const result = pyodide.runPython(python_code);
+    //       setOutput(result);
+    //     } catch (error) {
+    //       setOutput(`Error: ${error}`);
+    //     }
+    //   }
+    // };
+
+
+    // TODO: implement function to send request to fastapi to run code
+    const _sendCodeExecutionRequest = async function(code){
+      
+      const FASTAPI_URL = 'http://127.0.0.1:8000/execute_user_code';
+      try {
+        const payload = {
+          language: 'python',
+          code: code
+        };
+        const response = await axios.post(FASTAPI_URL, payload);
+        console.log('code-response:', response);
+      }
+      catch (error) {
+        console.log('Error:', error);
+      }
+
+    }
+    
     const handleRun = () => {
-      const result = runPythonCode(); // Call the function that runs Python code
+      console.log('Current Code:', codeState);
+      const result = _sendCodeExecutionRequest(codeState);
       setOutput(result);
     };
 
@@ -75,9 +134,11 @@ const ConsoleOutput = ({ output }) => {
           )}
         </div>
 
+        {/* TODO: add pyodide and get the running code complete with the chat completion today** <-- full focus */}
+
         <div className="flex items-center justify-start space-x-4 mt-4">
           <button
-            // onClick={handleRun}
+            onClick={handleRun}
             // bg-blue-600
             className="w-[110px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"
           >
