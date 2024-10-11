@@ -4,8 +4,8 @@ ENV_FILE = find_dotenv()
 load_dotenv(ENV_FILE)
 from pydantic import BaseModel
 from openai import AsyncOpenAI
-from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, APIRouter
-
+from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -16,7 +16,15 @@ app = FastAPI(
     docs_url="/api/py/docs",
     openapi_url="/api/py/openapi.json"
 )
-router = APIRouter()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Add your frontend's origin here
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 # TODO:
     # create it here first and get it to work
@@ -124,8 +132,26 @@ class CodeExecutionRequest(BaseModel):
     code: str
 
 
-@router.get("/execute_user_code")
+from utils import testing_one
+
+@app.post("/execute_user_code")
 async def execute_code(request: CodeExecutionRequest):
     print(f"language: {request.language}")
     print(f"code: {request.code}")
+
+    user_language = request.language
+    user_code = request.code
+
+    response = testing_one.execute_code_in_container(
+        language="python",
+        code=user_code
+    )
+
+    print(f"Docker Response: {response}")
+
+# TODO:
+    # create celery task for this docker code execution
+    # from there:
+        # show response on next.js app
+        # proceed to finalizing from there
 
