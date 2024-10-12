@@ -29,9 +29,6 @@ print(f"Complete Task State: {task_result.get()}")
 
 
 # if task_result.state != "SUCCESS":
-
 #     check_task_result(task_id_val)
 # else:
 #     print({"status": "Task completed", "output": task_result.result})
-
-

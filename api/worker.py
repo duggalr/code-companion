@@ -3,12 +3,24 @@ import docker
 from celery import Celery
 
 
+# # Initialize Celery
+# celery = Celery(
+#     'worker',
+#     broker='redis://localhost:6379/0',
+#     backend='redis://',
+# )
+# celery = Celery(__name__)
+# celery.conf.broker_url = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0")
+# celery.conf.result_backend = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379")
+
 # Initialize Celery
-celery = Celery(
-    'worker',
-    broker='redis://localhost:6379/0',
-    backend='redis://',
+celery = Celery(__name__)
+celery.conf.update(
+    broker_url=os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0"),
+    result_backend=os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379/0"),
 )
+
+print(f"Celery CONFIG: {celery.conf}")
 
 # Initialize Docker client
 client = docker.from_env()
@@ -78,10 +90,10 @@ def execute_code_in_container(language: str, code: str):
 import random
 import time
 
-@celery.task
+@celery.task(name="test_task_one")
 def test_task_one():
     rv = []
-    for idx in range(0, 100):
+    for idx in range(0, 15):
         rn = random.choice(list(range(1,4)))
         print(f"Sleep for {rn} seconds...")
         time.sleep(rn)
@@ -89,3 +101,11 @@ def test_task_one():
     
     final_sum = sum(rv)
     return {'success': True, 'output': final_sum}
+
+
+# TODO: let existing tasks finish and proceed from there to testing again once and then, adding our execute_code task
+
+@celery.task
+def add(x, y):
+    return x + y
+

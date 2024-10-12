@@ -136,7 +136,6 @@ class CodeExecutionRequest(BaseModel):
 # from utils import testing_one
 from worker import execute_code_in_container, test_task_one
 
-
 @app.post("/execute_user_code")
 async def execute_code(request: CodeExecutionRequest):
     """
@@ -177,17 +176,16 @@ def get_result(task_id: str):
     """
     Endpoint to check the result of the execution.
     """
+    print(f"Task ID: {task_id}")
     task_result = AsyncResult(task_id)
     print(f"Task Result: {task_result}")
-    
-    if task_result.state == 'PENDING':
-        return {"status": "Task is still being processed..."}
-    elif task_result.state == 'SUCCESS':        
-        return {"status": "Task completed", "output": task_result.result}
-    else:
-        return {"status": "Task failed", "error": task_result.info}
 
+    print(f"GET RESPONSE FROM TASK: {task_result.get()}")
 
-# TODO:
-    # results should be stored in redis and then fetched
-
+    # if task_result.state == 'PENDING':
+    #     return {"status": "Task is still being processed..."}
+    # elif task_result.state == 'SUCCESS':
+    #     task_rv = task_result.get()
+    #     return {"status": "Task completed", "output": task_rv}
+    # else:
+    #     return {"status": "Task failed", "error": task_result.info}

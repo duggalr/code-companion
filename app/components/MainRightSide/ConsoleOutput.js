@@ -59,12 +59,16 @@ const ConsoleOutput = ({ codeState }) => {
           code: code
         };
         const response = await axios.post(FASTAPI_URL, payload);
-        console.log('code-response:', response);
+        console.log('code-response:', response, response.data);
 
-        // Get the task ID from the response
         const { task_id } = response.data;
-        setTaskId(task_id);
+        console.log('task_id:', task_id);
 
+        // // Get the task ID from the response
+        // const { taskRes } = response.data;
+        // const { task_id } = taskRes.task_id;
+        
+        setTaskId(task_id);
         // Poll for the result
         pollForResult(task_id);
 
@@ -75,7 +79,6 @@ const ConsoleOutput = ({ codeState }) => {
 
     };
 
-
     const pollForResult = async (taskId) => {
       try {
         const resultUrl = `http://127.0.0.1:8000/result/${taskId}`;
@@ -83,6 +86,8 @@ const ConsoleOutput = ({ codeState }) => {
         // Poll the FastAPI server for result until the task completes
         const interval = setInterval(async () => {
           const resultResponse = await axios.get(resultUrl);
+          console.log("Result Response:", resultResponse);
+
           const { status, output } = resultResponse.data;
   
           if (status === 'Task completed') {
@@ -94,7 +99,7 @@ const ConsoleOutput = ({ codeState }) => {
         console.error('Error polling for result:', error);
       }
     };
-    
+
     const handleRun = () => {
       console.log('Current Code:', codeState);
       const result = _sendCodeExecutionRequest(codeState);
