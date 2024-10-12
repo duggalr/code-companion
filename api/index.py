@@ -134,7 +134,7 @@ class CodeExecutionRequest(BaseModel):
 
 
 # from utils import testing_one
-from worker import execute_code_in_container
+from worker import execute_code_in_container, test_task_one
 
 
 @app.post("/execute_user_code")
@@ -142,31 +142,34 @@ async def execute_code(request: CodeExecutionRequest):
     """
     Endpoint to submit code for execution.
     """
-    # print(f"language: {request.language}")
-    # print(f"code: {request.code}")
-
-    user_language = request.language
-    user_code = request.code
-
-    task = execute_code_in_container.delay(
-        language = user_language,
-        code = user_code
-    )
+    task = test_task_one.delay()
     return {"task_id": task.id}
 
-    # response = testing_one.execute_code_in_container(
-    #     language="python",
-    #     code=user_code
+    # # print(f"language: {request.language}")
+    # # print(f"code: {request.code}")
+
+    # user_language = request.language
+    # user_code = request.code
+
+    # task = execute_code_in_container.delay(
+    #     language = user_language,
+    #     code = user_code
     # )
-    # print(f"Docker Response: {response}")
-
-    # if submission.language not in ["python", "nodejs"]:
-    #     raise HTTPException(status_code=400, detail="Unsupported language")
-
-    # # Execute the code in the background using a Celery task
-    # task = execute_code_in_container.delay(submission.language, submission.code)
-    
     # return {"task_id": task.id}
+
+    # # response = testing_one.execute_code_in_container(
+    # #     language="python",
+    # #     code=user_code
+    # # )
+    # # print(f"Docker Response: {response}")
+
+    # # if submission.language not in ["python", "nodejs"]:
+    # #     raise HTTPException(status_code=400, detail="Unsupported language")
+
+    # # # Execute the code in the background using a Celery task
+    # # task = execute_code_in_container.delay(submission.language, submission.code)
+    
+    # # return {"task_id": task.id}
 
 
 @app.get("/result/{task_id}")
@@ -183,3 +186,8 @@ def get_result(task_id: str):
         return {"status": "Task completed", "output": task_result.result}
     else:
         return {"status": "Task failed", "error": task_result.info}
+
+
+# TODO:
+    # results should be stored in redis and then fetched
+

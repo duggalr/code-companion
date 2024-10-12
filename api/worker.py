@@ -4,7 +4,11 @@ from celery import Celery
 
 
 # Initialize Celery
-celery = Celery('worker', broker='redis://localhost:6379/0')
+celery = Celery(
+    'worker',
+    broker='redis://localhost:6379/0',
+    backend='redis://',
+)
 
 # Initialize Docker client
 client = docker.from_env()
@@ -70,14 +74,18 @@ def execute_code_in_container(language: str, code: str):
         return {"success": False, "output": logs}
 
 
-# if __name__ == "__main__":
-#     user_code = """
-# def greet(name: str) -> str:
-#     return f"Hello, {name}!"
 
-# if __name__ == "__main__":
-#     print(greet("Rahul"))
-# """
-#     # Test execution
-#     response = execute_code_in_container(language="python", code=user_code)
-#     print(response)
+import random
+import time
+
+@celery.task
+def test_task_one():
+    rv = []
+    for idx in range(0, 100):
+        rn = random.choice(list(range(1,4)))
+        print(f"Sleep for {rn} seconds...")
+        time.sleep(rn)
+        rv.append(idx)
+    
+    final_sum = sum(rv)
+    return {'success': True, 'output': final_sum}
