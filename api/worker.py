@@ -1,7 +1,15 @@
 import os
 import docker
+from celery import Celery
 
 
+# Initialize Celery
+celery = Celery('worker', broker='redis://localhost:6379/0')
+
+# Initialize Docker client
+client = docker.from_env()
+
+@celery.task
 def execute_code_in_container(language: str, code: str):
     """
     Task to run user-submitted code inside a Docker container.

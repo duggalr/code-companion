@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from celery.result import AsyncResult
 
 
 ### Create FastAPI instance with custom docs and openapi url
@@ -132,26 +133,53 @@ class CodeExecutionRequest(BaseModel):
     code: str
 
 
-from utils import testing_one
+# from utils import testing_one
+from worker import execute_code_in_container
+
 
 @app.post("/execute_user_code")
 async def execute_code(request: CodeExecutionRequest):
-    print(f"language: {request.language}")
-    print(f"code: {request.code}")
+    """
+    Endpoint to submit code for execution.
+    """
+    # print(f"language: {request.language}")
+    # print(f"code: {request.code}")
 
     user_language = request.language
     user_code = request.code
 
-    response = testing_one.execute_code_in_container(
-        language="python",
-        code=user_code
+    task = execute_code_in_container.delay(
+        language = user_language,
+        code = user_code
     )
+    return {"task_id": task.id}
 
-    print(f"Docker Response: {response}")
+    # response = testing_one.execute_code_in_container(
+    #     language="python",
+    #     code=user_code
+    # )
+    # print(f"Docker Response: {response}")
 
-# TODO:
-    # create celery task for this docker code execution
-    # from there:
-        # show response on next.js app
-        # proceed to finalizing from there
+    # if submission.language not in ["python", "nodejs"]:
+    #     raise HTTPException(status_code=400, detail="Unsupported language")
 
+    # # Execute the code in the background using a Celery task
+    # task = execute_code_in_container.delay(submission.language, submission.code)
+    
+    # return {"task_id": task.id}
+
+
+@app.get("/result/{task_id}")
+def get_result(task_id: str):
+    """
+    Endpoint to check the result of the execution.
+    """
+    task_result = AsyncResult(task_id)
+    print(f"Task Result: {task_result}")
+    
+    if task_result.state == 'PENDING':
+        return {"status": "Task is still being processed..."}
+    elif task_result.state == 'SUCCESS':        
+        return {"status": "Task completed", "output": task_result.result}
+    else:
+        return {"status": "Task failed", "error": task_result.info}

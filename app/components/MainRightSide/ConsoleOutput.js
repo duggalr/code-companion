@@ -8,7 +8,6 @@ import axios from 'axios';
 const ConsoleOutput = ({ codeState }) => {
 
     const [output, setOutput] = useState(""); // To hold the output of the code
-
     const [pyodide, setPyodide] = useState(null);
   
     // // Load Pyodide asynchronously
@@ -47,6 +46,9 @@ const ConsoleOutput = ({ codeState }) => {
     // };
 
 
+    const [code, setCode] = useState('');
+    const [taskId, setTaskId] = useState(null);
+
     // TODO: implement function to send request to fastapi to run code
     const _sendCodeExecutionRequest = async function(code){
       
@@ -58,12 +60,40 @@ const ConsoleOutput = ({ codeState }) => {
         };
         const response = await axios.post(FASTAPI_URL, payload);
         console.log('code-response:', response);
+
+        // Get the task ID from the response
+        const { task_id } = response.data;
+        setTaskId(task_id);
+
+        // Poll for the result
+        pollForResult(task_id);
+
       }
       catch (error) {
         console.log('Error:', error);
       }
 
-    }
+    };
+
+
+    const pollForResult = async (taskId) => {
+      try {
+        const resultUrl = `http://127.0.0.1:8000/result/${taskId}`;
+        
+        // Poll the FastAPI server for result until the task completes
+        const interval = setInterval(async () => {
+          const resultResponse = await axios.get(resultUrl);
+          const { status, output } = resultResponse.data;
+  
+          if (status === 'Task completed') {
+            setOutput(output);
+            clearInterval(interval);
+          }
+        }, 2000); // Poll every 2 seconds
+      } catch (error) {
+        console.error('Error polling for result:', error);
+      }
+    };
     
     const handleRun = () => {
       console.log('Current Code:', codeState);
