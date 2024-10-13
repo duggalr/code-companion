@@ -51,7 +51,7 @@ const ConsoleOutput = ({ codeState }) => {
 
     // TODO: implement function to send request to fastapi to run code
     const _sendCodeExecutionRequest = async function(code){
-      
+
       const FASTAPI_URL = 'http://127.0.0.1:8000/execute_user_code';
       try {
         const payload = {
@@ -69,8 +69,9 @@ const ConsoleOutput = ({ codeState }) => {
         // const { task_id } = taskRes.task_id;
         
         setTaskId(task_id);
-        // Poll for the result
-        pollForResult(task_id);
+        // // Poll for the result
+        // pollForResult(task_id);
+        pollForTaskStatus(task_id);
 
       }
       catch (error) {
@@ -79,25 +80,63 @@ const ConsoleOutput = ({ codeState }) => {
 
     };
 
-    const pollForResult = async (taskId) => {
+
+    const getTaskResponse = async (task_id) => {
+
       try {
-        const resultUrl = `http://127.0.0.1:8000/result/${taskId}`;
-        
-        // Poll the FastAPI server for result until the task completes
+
+        const taskResponseURL = `http://127.0.0.1:8000/result/${task_id}`;
+        const resultResponse = await axios.get(taskResponseURL);
+        console.log("Result Response:", resultResponse);
+
+      } catch (error) {
+        console.error('Error polling for result:', error);
+      }  
+      
+    };
+
+    const pollForTaskStatus = async (taskId) => {
+
+      try {
+
+        const taskStatusURL = `http://127.0.0.1:8000/task/status/${taskId}`
         const interval = setInterval(async () => {
-          const resultResponse = await axios.get(resultUrl);
+          const resultResponse = await axios.get(taskStatusURL);
           console.log("Result Response:", resultResponse);
 
-          const { status, output } = resultResponse.data;
+          // const { status, output } = resultResponse.data;
+          // const { task_id, status } = resultResponse.data;
+          const { status, task_id } = resultResponse.data;
+
+          console.log('STATUS:', status);
   
-          if (status === 'Task completed') {
+          if (status === 'SUCCESS') {
             setOutput(output);
             clearInterval(interval);
+            getTaskResponse(task_id);
           }
+
         }, 2000); // Poll every 2 seconds
+
+        // const resultUrl = `http://127.0.0.1:8000/result/${taskId}`;
+        
+        // // Poll the FastAPI server for result until the task completes
+        // const interval = setInterval(async () => {
+        //   const resultResponse = await axios.get(resultUrl);
+        //   console.log("Result Response:", resultResponse);
+
+        //   const { status, output } = resultResponse.data;
+  
+        //   if (status === 'Task completed') {
+        //     setOutput(output);
+        //     clearInterval(interval);
+        //   }
+
+        // }, 2000); // Poll every 2 seconds
       } catch (error) {
         console.error('Error polling for result:', error);
       }
+
     };
 
     const handleRun = () => {
