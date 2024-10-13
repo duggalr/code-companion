@@ -87,25 +87,25 @@ def execute_code_in_container(language: str, code: str):
 
 
 
-import random
-import time
+# import random
+# import time
 
-@celery.task(name="test_task_one")
-def test_task_one():
-    rv = []
-    for idx in range(0, 8):
-        rn = random.choice(list(range(1,4)))
-        print(f"Sleep for {rn} seconds...")
-        time.sleep(rn)
-        rv.append(idx)
+# @celery.task(name="test_task_one")
+# def test_task_one():
+#     rv = []
+#     for idx in range(0, 8):
+#         rn = random.choice(list(range(1,4)))
+#         print(f"Sleep for {rn} seconds...")
+#         time.sleep(rn)
+#         rv.append(idx)
     
-    final_sum = sum(rv)
-    return {'success': True, 'output': final_sum}
+#     final_sum = sum(rv)
+#     return {'success': True, 'output': final_sum}
 
 
-# TODO: let existing tasks finish and proceed from there to testing again once and then, adding our execute_code task
+# # TODO: let existing tasks finish and proceed from there to testing again once and then, adding our execute_code task
 
-@celery.task
-def add(x, y):
-    return x + y
+# @celery.task
+# def add(x, y):
+#     return x + y
 
