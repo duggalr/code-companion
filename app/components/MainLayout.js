@@ -12,9 +12,17 @@ const MainLayout = () => {
     const [leftWidth, setLeftWidth] = useState(window.innerWidth / 2); // Initial width for editor
     // const [consoleOutput, setConsoleOutput] = useState("");
 
-    // TODO: parent state
+    // TODO: Parent State
     const [editorCode, setEditorCode] = useState("\ndef hello_world():\n    return 'Hello World'\n\nhello_world()\n");
-  
+    
+    const [chatMessages, setChatMessages] = useState([
+        { text: "Hello, how can I help you?", sender: "bot", complete: true },
+    ]);
+    const [generatedMessage, setGeneratedMessage] = useState(""); // State to track the streaming message
+    const [isGeneratingMessage, setIsGeneratingMessage] = useState(false); // Track whether we're currently generating a response
+
+    const [consoleOutput, setConsoleOutput] = useState(null); // To hold the output of the code
+
     return (
   
         // f5f5f5
@@ -53,7 +61,17 @@ const MainLayout = () => {
             // className="flex flex-col flex-1 h-full bg-[#F5F5F5] dark:bg-gray-900"
             className="flex flex-col flex-1 h-full bg-[#F3F4F6] dark:bg-gray-900"
         >
-            <ConsoleChatTabs codeState={editorCode} />
+            <ConsoleChatTabs
+                codeState={editorCode}
+                chatMessages={chatMessages}
+                setChatMessages={setChatMessages}
+                generatedMessage={generatedMessage}
+                setGeneratedMessage={setGeneratedMessage}
+                isGeneratingMessage={isGeneratingMessage}
+                setIsGeneratingMessage={setIsGeneratingMessage}
+                consoleOutput={consoleOutput}
+                setConsoleOutput={setConsoleOutput}
+            />
         </div>
   
       </div>

@@ -3,14 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 
-const ChatInterface = () => {
+const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMessage, isGenerating, setIsGenerating }) => {
 
-  const [messages, setMessages] = useState([
-    { text: "Hello, how can I help you?", sender: "bot", complete: true },
-  ]);
+  // const [messages, setMessages] = useState([
+  //   { text: "Hello, how can I help you?", sender: "bot", complete: true },
+  // ]);  
+  // const [generatedMessage, setGeneratedMessage] = useState(""); // State to track the streaming message
+  // const [isGenerating, setIsGenerating] = useState(false); // Track whether we're currently generating a response
+  
   const [inputValue, setInputValue] = useState("");
-  const [generatedMessage, setGeneratedMessage] = useState(""); // State to track the streaming message
-  const [isGenerating, setIsGenerating] = useState(false); // Track whether we're currently generating a response
   const messagesEndRef = useRef(null);
 
   useEffect(() => {

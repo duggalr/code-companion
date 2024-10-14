@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal, faComments } from '@fortawesome/free-solid-svg-icons';
 
 
-const ConsoleChatTabs = ({ codeState }) => {
+const ConsoleChatTabs = ({ codeState, chatMessages, setChatMessages, generatedMessage, setGeneratedMessage, isGeneratingMessage, setIsGeneratingMessage, consoleOutput, setConsoleOutput }) => {
   const [activeTab, setActiveTab] = useState("console");
 
   return (
@@ -51,11 +51,15 @@ const ConsoleChatTabs = ({ codeState }) => {
       {/* Content */}
       {/* bg-white dark:bg-gray-800 */} {/* <div className="flex-grow overflow-auto"> */}
       <div className="flex-grow overflow-y-scroll no-scrollbar">
-        {activeTab === "console" && <ConsoleOutput codeState={codeState} />}
-        {activeTab === "chat" && <ChatInterface />}
+        {activeTab === "console" && <ConsoleOutput codeState={codeState} output={consoleOutput} setOutput={setConsoleOutput} />}
+        {activeTab === "chat" && <ChatInterface messages={chatMessages}
+                setMessages={setChatMessages}
+                generatedMessage={generatedMessage}
+                setGeneratedMessage={setGeneratedMessage}
+                isGenerating={isGeneratingMessage}
+                setIsGenerating={setIsGeneratingMessage} />}
       </div>
       
-
     </div>
 
   );

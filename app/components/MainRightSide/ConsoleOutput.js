@@ -5,10 +5,10 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 
 
-const ConsoleOutput = ({ codeState }) => {
+const ConsoleOutput = ({ codeState, output, setOutput }) => {
 
-    const [output, setOutput] = useState(null); // To hold the output of the code
-    const [code, setCode] = useState('');
+    // const [output, setOutput] = useState(null); // To hold the output of the code
+    // const [code, setCode] = useState('');
     const [taskId, setTaskId] = useState(null);
 
     // TODO: implement function to send request to fastapi to run code
