@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv, find_dotenv
 ENV_FILE = find_dotenv()
 load_dotenv(ENV_FILE)
+import random
+import time
 from pydantic import BaseModel
 from openai import AsyncOpenAI
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
@@ -113,10 +115,6 @@ def execute_code_in_container(language: str, code: str):
 
 
 
-
-import random
-import time
-
 @celery.task(name="test_task_one")
 def test_task_one():
     rv = []
@@ -133,43 +131,46 @@ def test_task_one():
 ### Views ###
 
 def _prepate_tutor_prompt():
-    prompt = """##Instructions:
-You will be assisting a student who is learning Python, by being their upbeat, encouraging tutor. 
-Your primary goal is to guide and mentor them, helping them learn Python effectively, but also to become a great individual thinker. Please adhere to these guidelines. See examples below of what not to say, and what to say instead.
-No Direct Answers: Do not provide direct code solutions to the students' questions or challenges. Instead, focus on providing hints, explanations, and guidance that help them understand and solve the problems on their own. For questions students ask, don't simply provide the answer. Instead, provide a hint and try to ask the student a follow-up question/suggestion. Under no circumstance should you provide the student a direct answer to their problem/question.
-Encourage Problem Solving: Always encourage the students to think through the problems themselves. Ask leading questions that guide them toward a solution, and provide feedback on their thought processes.
-Make sure you consider both correctness and efficiency. You want to help the student write optimal code, that is also correct for their given problem.
-Only ask one question or offer only one suggestion at a time. Wait for the students response before asking a new question or offering a new suggestion.
-Encourage the student. Always motivate the student and provide encourage, even when they are struggling or haven't figured out the solution yet. This will help provide motivation and elicit positive emotion for the student. 
+#     prompt = """##Instructions:
+# You will be assisting a student who is learning Python, by being their upbeat, encouraging tutor. 
+# Your primary goal is to guide and mentor them, helping them learn Python effectively, but also to become a great individual thinker. Please adhere to these guidelines. See examples below of what not to say, and what to say instead.
+# No Direct Answers: Do not provide direct code solutions to the students' questions or challenges. Instead, focus on providing hints, explanations, and guidance that help them understand and solve the problems on their own. For questions students ask, don't simply provide the answer. Instead, provide a hint and try to ask the student a follow-up question/suggestion. Under no circumstance should you provide the student a direct answer to their problem/question.
+# Encourage Problem Solving: Always encourage the students to think through the problems themselves. Ask leading questions that guide them toward a solution, and provide feedback on their thought processes.
+# Make sure you consider both correctness and efficiency. You want to help the student write optimal code, that is also correct for their given problem.
+# Only ask one question or offer only one suggestion at a time. Wait for the students response before asking a new question or offering a new suggestion.
+# Encourage the student. Always motivate the student and provide encourage, even when they are struggling or haven't figured out the solution yet. This will help provide motivation and elicit positive emotion for the student. 
 
-##Example Student Question:
-# Find the total product of the list
+# ##Example Student Question:
+# # Find the total product of the list
 
-list_one = [2,23,523,1231,32,9]
-total_product = 0
-for idx in list_one:
-    total_product = idx * idx
+# list_one = [2,23,523,1231,32,9]
+# total_product = 0
+# for idx in list_one:
+#     total_product = idx * idx
 
-I'm confused here. I am multiplying idx and setting it to total_product but getting the wrong answer. What is wrong?
+# I'm confused here. I am multiplying idx and setting it to total_product but getting the wrong answer. What is wrong?
 
-##Example Bad Answer (Avoid this type of answer):
-You are correct in iterating through the list with the for loop but at the moment, your total_product is incorrectly setup. Try this instead:
-list_one = [2,23,523,1231,32,9]
-total_product = 1
-for idx in list_one:
-    total_product = total_product * idx
+# ##Example Bad Answer (Avoid this type of answer):
+# You are correct in iterating through the list with the for loop but at the moment, your total_product is incorrectly setup. Try this instead:
+# list_one = [2,23,523,1231,32,9]
+# total_product = 1
+# for idx in list_one:
+#     total_product = total_product * idx
 
-##Example Good Answer: (this is a good answer because it identifies the mistake the student is making but instead of correcting it for the student, it asks the student a follow-up question as a hint, forcing the student to think on their own)
-You are on the right track. Pay close attention to the operation you are performing in the loop. You're currently multiplying the number with itself, but you want to find the product of all numbers. What operation should you use instead to continuously update 'total_product'?
+# ##Example Good Answer: (this is a good answer because it identifies the mistake the student is making but instead of correcting it for the student, it asks the student a follow-up question as a hint, forcing the student to think on their own)
+# You are on the right track. Pay close attention to the operation you are performing in the loop. You're currently multiplying the number with itself, but you want to find the product of all numbers. What operation should you use instead to continuously update 'total_product'?
 
-##Student Question:
-{question}
+# ##Student Question:
+# {question}
 
-##Student Code:
-{student_code}
+# ##Student Code:
+# {student_code}
 
-##Your Answer:
-"""
+# ##Your Answer:
+# """
+#     return prompt
+
+    prompt = """Generate a short, 100-word funny children story."""
     return prompt
 
 
@@ -304,8 +305,6 @@ def get_result(task_id: str):
 #     # else:
 #     #     return {"status": "Task failed", "error": task_result.info}
 
-
-
 # @app.post("/execute_user_code")
 # async def execute_code(request: CodeExecutionRequest):
 #     """
@@ -339,4 +338,3 @@ def get_result(task_id: str):
 #     # # task = execute_code_in_container.delay(submission.language, submission.code)
     
 #     # # return {"task_id": task.id}
-
