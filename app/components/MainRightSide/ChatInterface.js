@@ -1,28 +1,45 @@
 import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faPlay, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
 const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMessage, isGenerating, setIsGenerating }) => {
 
-  // const [messages, setMessages] = useState([
-  //   { text: "Hello, how can I help you?", sender: "bot", complete: true },
-  // ]);  
-  // const [generatedMessage, setGeneratedMessage] = useState(""); // State to track the streaming message
-  // const [isGenerating, setIsGenerating] = useState(false); // Track whether we're currently generating a response
-  
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [sendBtnEnabled, setSendBtnEnabled] = useState(false);
 
+  // Enter Listener
+  useEffect(() => {
+    const listener = (event) => {
+      if ((event.code === "Enter" || event.code === "NumpadEnter") && !event.shiftKey) {
+        console.log("Enter key was pressed without Shift. Run your function.");
+        event.preventDefault();
+        // callMyFunction();
+      }
+    };
+  
+    document.addEventListener("keydown", listener);
+  
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, []);
+  
+
+  // End of Messages
   useEffect(() => {
     // Keep the input box always visible at the bottom
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+  
 
   const [ws, setWs] = useState(null);
 
   let accumulatedMessage = "";
 
+  // Web Socket
   useEffect(() => {
     // Create WebSocket connection
     const socket = new WebSocket("ws://127.0.0.1:8000/ws_handle_chat_response");
@@ -50,6 +67,7 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
 
         setGeneratedMessage(""); // Clear the generated message state for future use
         setIsGenerating(false);  // Reset generation state
+        setIsLoading(false);
 
       } else {
         // Keep appending parts of the generated message
@@ -77,23 +95,34 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
         const newMessage = { text: inputValue, sender: 'user', type: 'user_message', complete: true };
         console.log('message:', newMessage);
 
+        setSendBtnEnabled(false);
+        setIsLoading(true);
+        
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         ws.send(JSON.stringify(newMessage));
         setInputValue("");
     }
   };
 
+  // setSendBtnEnabled
+  // onChange={(e) => setInputValue(e.target.value)}
+  const handleNewInputValue = (e) => {
+
+    let user_input_message = e.target.value;
+    setInputValue(user_input_message);
+
+    if (user_input_message.trim() !== "") {
+      setSendBtnEnabled(true);
+    } else {
+      setSendBtnEnabled(false);
+    }
+
+  };
+
 
   return (
 
-    // bg-gray-100
     <div className="flex flex-col h-4/5 dark:bg-gray-900 p-4">
-      
-      {/* <span className="text-gray-400 text-xs pt-1 pl-1 pb-2 tracking-normal">
-        <span className="font-bold">
-          Note:
-        </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </span> */}
 
       <span className="text-gray-500 dark:text-gray-400 text-xs pt-1 pl-1 pb-4 tracking-normal">
         <span className="font-bold">
@@ -128,25 +157,104 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
 
       {/* Input area - textarea */}
       <div className="flex items-center border-t border-gray-300 dark:border-gray-600 pt-2 mt-2">
+        
         <textarea
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          // className="text-[14px] flex-grow resize-none p-3 bg-gray-100 dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2"
+          // onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => handleNewInputValue(e)}
           className="text-[14px] flex-grow resize-none p-3 bg-[#F3F4F6] dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 mr-2"
           placeholder="type a message..."
-          rows={1} // Keep the textarea at one row
+          rows={1}
+          disabled={isLoading}
         />
-
+        
         <button
           onClick={handleSendMessage}
-          className="w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"
+          disabled={isLoading || !sendBtnEnabled} // Disable when loading or when send button is not enabled
+          className={`${sendBtnEnabled && !isLoading ? 
+            "w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all cursor-pointer" : 
+            "w-[100px] py-2 text-[14px] bg-gray-500 cursor-not-allowed font-medium rounded-xl"
+          }`}
         >
-          <FontAwesomeIcon
-              icon={faPaperPlane}
-              className="text-white opacity-90 group-hover:opacity-100 pr-2"
-            />
-          Send
+          {isLoading ? (
+            <FontAwesomeIcon icon={faSpinner} spin className="text-white pr-2" />
+          ) : (
+            <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-1" />
+          )}
+          {isLoading ? "" : "Send"}
         </button>
+
+
+        {/* <button
+          onClick={handleSendMessage}
+          // disabled={isLoading} // Disable button when loading
+          disabled={sendBtnEnabled}
+          className={`${sendBtnEnabled ? 
+            "w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all cursor-pointer"
+            : 
+            "w-[100px] py-2 text-[14px] bg-gray-500 cursor-not-allowed font-medium rounded-xl"
+          }`}
+          // className={`${(isLoading) ? "w-[100px] py-2 text-[14px] bg-blue-500 cursor-not-allowed font-medium rounded-xl" : "w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"}`}
+          // className="w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"
+        >
+
+          {isLoading ? (
+            <FontAwesomeIcon icon={faSpinner} spin className="text-white pr-2" />
+          ) : (
+            <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-1" />
+          )}
+          {isLoading ? "" : "Send"}
+
+        </button> */}
+        {/* sendBtnEnabled, setSendBtnEnabled */}
+
+
+        {/* {
+          inputValue.trim().length > 0 ? (
+
+            <button
+              onClick={handleSendMessage}
+              disabled={isLoading} // Disable button when loading
+              className={`${isLoading ? "w-[100px] py-2 text-[14px] bg-blue-500 cursor-not-allowed font-medium rounded-xl" : "w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"}`}
+              // className="w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"
+            >
+
+              {isLoading ? (
+                <FontAwesomeIcon icon={faSpinner} spin className="text-white pr-2" />
+              ) : (
+                <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-1" />
+              )}
+              {isLoading ? "" : "Send"}
+
+            </button>
+
+          ) : (
+
+            <button
+              onClick={handleSendMessage}
+              disabled={true}
+              className="w-[100px] mr-2 py-2 text-[14px] bg-gray-500 opacity-90 cursor-not-allowed font-medium rounded-xl"
+            >
+              <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-2" />
+              Send
+            </button>
+
+          )
+        } */}
+
+        {/* <button
+          onClick={handleSendMessage}
+          disabled={isLoading} // Disable button when loading
+          className={`w-[110px] py-2 text-[14px] text-white font-medium rounded-xl transition-all 
+            ${isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-700"}`}
+        >
+          {isLoading ? (
+            <FontAwesomeIcon icon={faSpinner} spin className="text-white pr-2" />
+          ) : (
+            <FontAwesomeIcon icon={faPlay} className="text-white pr-1" />
+          )}
+          {isLoading ? "" : "Send"}
+        </button> */}
 
       </div>
 
