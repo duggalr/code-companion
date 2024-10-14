@@ -7,8 +7,8 @@ import axios from 'axios';
 
 const ConsoleOutput = ({ codeState }) => {
 
-    const [output, setOutput] = useState(""); // To hold the output of the code
-    const [pyodide, setPyodide] = useState(null);
+    const [output, setOutput] = useState(null); // To hold the output of the code
+    // const [pyodide, setPyodide] = useState(null);
   
     // // Load Pyodide asynchronously
     // useEffect(() => {
@@ -89,6 +89,10 @@ const ConsoleOutput = ({ codeState }) => {
         const resultResponse = await axios.get(taskResponseURL);
         console.log("Result Response:", resultResponse);
 
+        const { result_output_status, result_output_value } = resultResponse.data;
+        console.log('Result Output Status TWO:', result_output_status, result_output_value);
+        setOutput(result_output_value);
+
       } catch (error) {
         console.error('Error polling for result:', error);
       }  
@@ -107,11 +111,10 @@ const ConsoleOutput = ({ codeState }) => {
           // const { status, output } = resultResponse.data;
           // const { task_id, status } = resultResponse.data;
           const { status, task_id } = resultResponse.data;
-
           console.log('STATUS:', status);
   
           if (status === 'SUCCESS') {
-            setOutput(output);
+            // setOutput(output);
             clearInterval(interval);
             getTaskResponse(task_id);
           }
@@ -142,7 +145,7 @@ const ConsoleOutput = ({ codeState }) => {
     const handleRun = () => {
       console.log('Current Code:', codeState);
       const result = _sendCodeExecutionRequest(codeState);
-      setOutput(result);
+      // setOutput(result);
     };
 
     return (
@@ -194,8 +197,11 @@ const ConsoleOutput = ({ codeState }) => {
           // className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 dark:border-gray-600 bg-[#f3f3f3] dark:bg-gray-800 text-gray-900"
           className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 dark:border-gray-600 bg-[#f4f5f6] dark:bg-gray-800 text-gray-900"
         >
-          {output ? (
-            <pre className="whitespace-pre-wrap break-words">{output}</pre>
+          {output !== null ? (
+            <p className="text-gray-400 dark:text-gray-500 pt-2 pl-1 text-[14px] tracking-normal font-normal">
+              <span className="text-blue-400">&gt;&gt;</span> {output}
+            </p>
+            // <pre className="whitespace-pre-wrap break-words"><span className="text-blue-400">&gt;&gt;</span> {output}</pre>
           ) : (
             <p className="text-gray-400 dark:text-gray-500 pt-2 pl-1 text-[14px] tracking-normal font-normal">
               <span className="text-blue-400">&gt;&gt;</span> console output will appear here...
@@ -206,6 +212,7 @@ const ConsoleOutput = ({ codeState }) => {
             //   </p>
             // </div>
           )}
+
         </div>
 
         {/* TODO: add pyodide and get the running code complete with the chat completion today** <-- full focus */}

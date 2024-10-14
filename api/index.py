@@ -238,9 +238,14 @@ async def execute_code(request: CodeExecutionRequest):
     """
     Endpoint to submit code for execution.
     """
-    # task = test_task_one.delay()
-    # TODO:
-    task = execute_code_in_container.delay()
+    user_language = request.language
+    user_code = request.code
+    print(f"Language: {user_language} | Code: {user_code}")
+
+    task = execute_code_in_container.delay(
+        language = user_language,
+        code = user_code
+    )
     return {"task_id": task.id}
   
 
@@ -257,7 +262,16 @@ def get_result(task_id: str):
     """
     print(f"Task ID: {task_id}")
     task_result = celery.AsyncResult(task_id)
-    return {"task_id": task_id, "task_result": task_result}
+    # print(f"Task result: {task_result}")
+    result_data = task_result.get()
+    print(f"result-data: {result_data}")
+    result_output_status = result_data['success']
+    result_output_value = result_data['output']
+    return {
+        # "task_id": task_id,
+        "result_output_status": result_output_status,
+        "result_output_value": result_output_value
+    }
     # print(f"Task Result: {task_result}")
     # print(f"Task RESULT DETAIL: {task_result.result}")
     # print(f"GET RESPONSE FROM TASK: {task_result.get()}")
