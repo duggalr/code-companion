@@ -223,7 +223,7 @@ class CodeExecutionRequest(BaseModel):
     code: str
 
 
-@app.post("/testing-dev")
+@app.get("/testing-dev")
 async def dev_test_hello_world():
     return {'message': 'Hello World!'}
 
