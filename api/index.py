@@ -2,17 +2,10 @@ import os
 from dotenv import load_dotenv, find_dotenv
 ENV_FILE = find_dotenv()
 load_dotenv(ENV_FILE)
-import random
-import time
 from pydantic import BaseModel
 from openai import AsyncOpenAI
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-# from fastapi.responses import HTMLResponse
-# from fastapi.staticfiles import StaticFiles
-# from fastapi.templating import Jinja2Templates
-
-### Celery ###
 import docker
 from celery import Celery
 from celery.result import AsyncResult
@@ -27,23 +20,31 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Add your frontend's origin here
+    allow_origins=["http://localhost:3000"],  # TODO: add vercel origin here
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Initialize Celery
-celery = Celery(
-    __name__,
-    # backend = "redis://127.0.0.1",
-    # broker = "redis://127.0.0.1:6379/0",
-    backend = f"redis://{os.environ['REDIS_USERNAME']}:{os.environ['REDIS_PASSWORD']}@{os.environ['REDIS_URL']}/0",
-    broker = f"redis://{os.environ['REDIS_USERNAME']}:{os.environ['REDIS_PASSWORD']}@{os.environ['REDIS_URL']}/0",
-)
+if 'PRODUCTION' in os.environ:
+    celery = Celery(
+        __name__,
+        backend = f"redis://{os.environ['REDIS_USERNAME']}:{os.environ['REDIS_PASSWORD']}@{os.environ['REDIS_URL']}/0",
+        broker = f"redis://{os.environ['REDIS_USERNAME']}:{os.environ['REDIS_PASSWORD']}@{os.environ['REDIS_URL']}/0",
+    )
+else:
+    celery = Celery(
+        __name__,
+        backend = "redis://127.0.0.1",
+        broker = "redis://127.0.0.1:6379/0",
+    )
 
 # Initialize Docker client
 client = docker.from_env()
+
+
+## Celery Tasks ##
 
 @celery.task
 def execute_code_in_container(language: str, code: str):
@@ -106,20 +107,7 @@ def execute_code_in_container(language: str, code: str):
         return {"success": False, "output": logs}
 
 
-@celery.task(name="test_task_one")
-def test_task_one():
-    rv = []
-    for idx in range(0, 15):
-        rn = random.choice(list(range(1,4)))
-        print(f"Sleep for {rn} seconds...")
-        time.sleep(rn)
-        rv.append(idx)
-
-    final_sum = sum(rv)
-    return {'success': True, 'output': final_sum}
-
-
-### Views ###
+## Util Functions for Views ##
 
 def _prepate_tutor_prompt():
 #     prompt = """##Instructions:
@@ -186,13 +174,26 @@ async def generate_async_response_stream():
     )
 
     async for chunk in response_stream:
-        print('res:', chunk)
+        # print('res:', chunk)
         if chunk.choices[0].finish_reason == 'stop':
             yield None
         else:
             content = chunk.choices[0].delta.content
             if content:
                 yield content
+
+
+
+## Views ##
+
+class CodeExecutionRequest(BaseModel):
+    language: str
+    code: str
+
+
+@app.get("/testing-dev")
+async def dev_test_hello_world():
+    return {'message': 'Hello World!'}
 
 
 @app.websocket("/ws_handle_chat_response")
@@ -218,16 +219,6 @@ async def websocket_handle_chat_response(websocket: WebSocket):
     except WebSocketDisconnect:
         print("WebSocket connection closed")
         await websocket.close()
-
-
-class CodeExecutionRequest(BaseModel):
-    language: str
-    code: str
-
-
-@app.get("/testing-dev")
-async def dev_test_hello_world():
-    return {'message': 'Hello World!'}
 
 
 @app.post("/execute_user_code")
@@ -259,24 +250,12 @@ def get_result(task_id: str):
     """
     print(f"Task ID: {task_id}")
     task_result = celery.AsyncResult(task_id)
-    # print(f"Task result: {task_result}")
     result_data = task_result.get()
+
     print(f"result-data: {result_data}")
     result_output_status = result_data['success']
     result_output_value = result_data['output']
     return {
-        # "task_id": task_id,
         "result_output_status": result_output_status,
         "result_output_value": result_output_value
     }
-    # print(f"Task Result: {task_result}")
-    # print(f"Task RESULT DETAIL: {task_result.result}")
-    # print(f"GET RESPONSE FROM TASK: {task_result.get()}")
-    # if task_result.state == 'PENDING':
-    #     return {"status": "Task is still being processed..."}
-    # elif task_result.state == 'SUCCESS':
-    #     task_rv = task_result.get()
-    #     return {"status": "Task completed", "output": task_rv}
-    # else:
-    #     return {"status": "Task failed", "error": task_result.info}
-

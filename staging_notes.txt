@@ -1,7 +1,13 @@
 TODO:
 - setup celery and redis (<-- literally should be prehooks before application starts)
 - update the env variables accordingly
-- create basic tests for the staging url to ensure it works
+
+**Start here**:
+    - create basic tests for the staging url to ensure it works
+    - from there, setup the staging frontend in vercel as shown below
+        - **get all staging with custom domain complete today**
+
+
 - setup staging for frontend in vercel
 - update urls with .env variables to test the staging api
 - ^get staging to completely work
