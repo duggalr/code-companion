@@ -16,3 +16,5 @@ TODO:
 - update urls with .env variables to test the staging api
 - ^get staging to completely work
     - then setup CI/CD and figure out how to do the production environment
+
+test
