@@ -201,9 +201,9 @@ async def websocket_handle_chat_response(websocket: WebSocket):
     await websocket.accept()  # Accept WebSocket connection
     try:
         while True:
-            # Receive data from client
-            data = await websocket.receive_json()
-            # print('Received data:', data)
+            # # Receive data from client
+            # data = await websocket.receive_json()
+            # # print('Received data:', data)
 
             # TODO:
                 # MODEL_GEN_COMPLETE
