@@ -12,6 +12,11 @@ from fastapi.middleware.cors import CORSMiddleware
 # from fastapi.staticfiles import StaticFiles
 # from fastapi.templating import Jinja2Templates
 
+### Celery ###
+import docker
+from celery import Celery
+from celery.result import AsyncResult
+
 
 ### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(
@@ -28,27 +33,12 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
-### Celery ###
-import docker
-from celery import Celery
-from celery.result import AsyncResult
-
-# celery -A index worker --loglevel=info
-
 # Initialize Celery
 celery = Celery(
     __name__,
     backend = "redis://127.0.0.1",
     broker = "redis://127.0.0.1:6379/0",
 )
-# celery.conf.update(
-#     __name__,
-#     broker="redis://127.0.0.1:6379/0",
-#     backend="redis://127.0.0.1:6379/0"
-#     # broker_url = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0"),
-#     # result_backend = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379/0"),
-# )
-# print(f"Celery CONFIG: {celery.conf}")
 
 # Initialize Docker client
 client = docker.from_env()
@@ -112,7 +102,6 @@ def execute_code_in_container(language: str, code: str):
         return {"success": True, "output": logs}
     else:
         return {"success": False, "output": logs}
-
 
 
 @celery.task(name="test_task_one")
@@ -284,57 +273,3 @@ def get_result(task_id: str):
     # else:
     #     return {"status": "Task failed", "error": task_result.info}
 
-
-
-# @app.get("/result/{task_id}")
-# def get_result(task_id: str):
-#     """
-#     Endpoint to check the result of the execution.
-#     """
-#     print(f"Task ID: {task_id}")
-#     task_result = AsyncResult(task_id)
-#     print(f"Task Result: {task_result}")
-
-#     print(f"GET RESPONSE FROM TASK: {task_result.get()}")
-
-#     # if task_result.state == 'PENDING':
-#     #     return {"status": "Task is still being processed..."}
-#     # elif task_result.state == 'SUCCESS':
-#     #     task_rv = task_result.get()
-#     #     return {"status": "Task completed", "output": task_rv}
-#     # else:
-#     #     return {"status": "Task failed", "error": task_result.info}
-
-# @app.post("/execute_user_code")
-# async def execute_code(request: CodeExecutionRequest):
-#     """
-#     Endpoint to submit code for execution.
-#     """
-#     task = test_task_one.delay()
-#     return {"task_id": task.id}
-
-#     # # print(f"language: {request.language}")
-#     # # print(f"code: {request.code}")
-
-#     # user_language = request.language
-#     # user_code = request.code
-
-#     # task = execute_code_in_container.delay(
-#     #     language = user_language,
-#     #     code = user_code
-#     # )
-#     # return {"task_id": task.id}
-
-#     # # response = testing_one.execute_code_in_container(
-#     # #     language="python",
-#     # #     code=user_code
-#     # # )
-#     # # print(f"Docker Response: {response}")
-
-#     # # if submission.language not in ["python", "nodejs"]:
-#     # #     raise HTTPException(status_code=400, detail="Unsupported language")
-
-#     # # # Execute the code in the background using a Celery task
-#     # # task = execute_code_in_container.delay(submission.language, submission.code)
-    
-#     # # return {"task_id": task.id}
