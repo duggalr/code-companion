@@ -2,6 +2,10 @@ TODO:
 - setup celery and redis (<-- literally should be prehooks before application starts)
 - update the env variables accordingly
 
+TODO:
+- run new tests in aws staging and ensure they work
+- from there --> create staging frontend on vercel and link to aws endpoint
+
 **Start here**:
     - create basic tests for the staging url to ensure it works
     - from there, setup the staging frontend in vercel as shown below
