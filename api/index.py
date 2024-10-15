@@ -203,12 +203,12 @@ async def websocket_handle_chat_response(websocket: WebSocket):
         while True:
             # Receive data from client
             data = await websocket.receive_json()
-            print('Received data:', data)
+            # print('Received data:', data)
 
             # TODO:
                 # MODEL_GEN_COMPLETE
             async for text in generate_async_response_stream():
-                print('Response', text)
+                # print('Response', text)
                 # print('Is None:', text is None)
                 # await websocket.send_text(text)
                 if text is None:

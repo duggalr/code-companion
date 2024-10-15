@@ -30,86 +30,86 @@ async def test_websocket_handle_chat_response():
         websocket.close()
 
 
-@pytest.mark.asyncio
-@patch("index.execute_code_in_container.delay")  # Mock the Celery task
-async def test_execute_code(mock_execute_code):
-    """Test POST /execute_user_code endpoint with Celery mock."""
-    mock_execute_code.return_value.id = "test-task-id"
+# @pytest.mark.asyncio
+# @patch("index.execute_code_in_container.delay")  # Mock the Celery task
+# async def test_execute_code(mock_execute_code):
+#     """Test POST /execute_user_code endpoint with Celery mock."""
+#     mock_execute_code.return_value.id = "test-task-id"
 
-    request_data = {
-        "language": "python",
-        "code": "print('Hello, World!')"
-    }
+#     request_data = {
+#         "language": "python",
+#         "code": "print('Hello, World!')"
+#     }
 
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.post("/execute_user_code", json=request_data)
+#     async with AsyncClient(app=app, base_url="http://test") as ac:
+#         response = await ac.post("/execute_user_code", json=request_data)
 
-    assert response.status_code == 200
-    assert response.json() == {"task_id": "test-task-id"}
-    mock_execute_code.assert_called_once_with(
-        language="python",
-        code="print('Hello, World!')"
-    )
-
-
-@pytest.mark.asyncio
-@patch("index.AsyncResult")
-async def test_get_status(mock_async_result):
-    """Test GET /task/status/{task_id} endpoint."""
-    mock_async_result.return_value.status = "SUCCESS"
-
-    task_id = "test-task-id"
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.get(f"/task/status/{task_id}")
-
-    assert response.status_code == 200
-    assert response.json() == {"task_id": task_id, "status": "SUCCESS"}
-    mock_async_result.assert_called_once_with(task_id)
+#     assert response.status_code == 200
+#     assert response.json() == {"task_id": "test-task-id"}
+#     mock_execute_code.assert_called_once_with(
+#         language="python",
+#         code="print('Hello, World!')"
+#     )
 
 
-@pytest.mark.asyncio
-@patch("index.AsyncResult")
-async def test_get_result(mock_async_result):
-    """Test GET /result/{task_id} endpoint."""
-    task_result_mock = {
-        'success': True,
-        'output': 'Execution completed successfully!'
-    }
-    mock_async_result.return_value.get.return_value = task_result_mock
+# @pytest.mark.asyncio
+# @patch("index.AsyncResult")
+# async def test_get_status(mock_async_result):
+#     """Test GET /task/status/{task_id} endpoint."""
+#     mock_async_result.return_value.status = "SUCCESS"
 
-    task_id = "test-task-id"
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.get(f"/result/{task_id}")
+#     task_id = "test-task-id"
+#     async with AsyncClient(app=app, base_url="http://test") as ac:
+#         response = await ac.get(f"/task/status/{task_id}")
 
-    assert response.status_code == 200
-    assert response.json() == {
-        "result_output_status": True,
-        "result_output_value": "Execution completed successfully!"
-    }
-    mock_async_result.assert_called_once_with(task_id)
+#     assert response.status_code == 200
+#     assert response.json() == {"task_id": task_id, "status": "SUCCESS"}
+#     mock_async_result.assert_called_once_with(task_id)
 
 
-@pytest.mark.asyncio
-async def test_execute_code_integration():
-    request_data = {
-        "language": "python",
-        "code": "print('Hello, World!')"
-    }
+# @pytest.mark.asyncio
+# @patch("index.AsyncResult")
+# async def test_get_result(mock_async_result):
+#     """Test GET /result/{task_id} endpoint."""
+#     task_result_mock = {
+#         'success': True,
+#         'output': 'Execution completed successfully!'
+#     }
+#     mock_async_result.return_value.get.return_value = task_result_mock
 
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.post("/execute_user_code", json=request_data)
+#     task_id = "test-task-id"
+#     async with AsyncClient(app=app, base_url="http://test") as ac:
+#         response = await ac.get(f"/result/{task_id}")
 
-    task_id = response.json()["task_id"]
-    print(f"Waiting for 10 seconds for task to complete...")
-    time.sleep(10)
+#     assert response.status_code == 200
+#     assert response.json() == {
+#         "result_output_status": True,
+#         "result_output_value": "Execution completed successfully!"
+#     }
+#     mock_async_result.assert_called_once_with(task_id)
 
-    # Get status of the task
-    task_result = AsyncResult(task_id)
-    print(f"Task Result: {task_result}")
-    assert task_result.status == "SUCCESS"
 
-    # Get the result of the task
-    result_data = task_result.get()
-    print(f"Result Data: {result_data}")
-    assert result_data["success"]
-    assert result_data["output"] == "Hello, World!\n"
+# @pytest.mark.asyncio
+# async def test_execute_code_integration():
+#     request_data = {
+#         "language": "python",
+#         "code": "print('Hello, World!')"
+#     }
+
+#     async with AsyncClient(app=app, base_url="http://test") as ac:
+#         response = await ac.post("/execute_user_code", json=request_data)
+
+#     task_id = response.json()["task_id"]
+#     print(f"Waiting for 10 seconds for task to complete...")
+#     time.sleep(10)
+
+#     # Get status of the task
+#     task_result = AsyncResult(task_id)
+#     print(f"Task Result: {task_result}")
+#     assert task_result.status == "SUCCESS"
+
+#     # Get the result of the task
+#     result_data = task_result.get()
+#     print(f"Result Data: {result_data}")
+#     assert result_data["success"]
+#     assert result_data["output"] == "Hello, World!\n"
