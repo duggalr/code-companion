@@ -36,8 +36,10 @@ app.add_middleware(
 # Initialize Celery
 celery = Celery(
     __name__,
-    backend = "redis://127.0.0.1",
-    broker = "redis://127.0.0.1:6379/0",
+    # backend = "redis://127.0.0.1",
+    # broker = "redis://127.0.0.1:6379/0",
+    backend = f"redis://{os.environ['REDIS_USERNAME']}:{os.environ['REDIS_PASSWORD']}@{os.environ['REDIS_URL']}/0",
+    broker = f"redis://{os.environ['REDIS_USERNAME']}:{os.environ['REDIS_PASSWORD']}@{os.environ['REDIS_URL']}/0",
 )
 
 # Initialize Docker client

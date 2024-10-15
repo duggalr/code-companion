@@ -1,1 +1,8 @@
-staging test
+TODO:
+- setup celery and redis (<-- literally should be prehooks before application starts)
+- update the env variables accordingly
+- create basic tests for the staging url to ensure it works
+- setup staging for frontend in vercel
+- update urls with .env variables to test the staging api
+- ^get staging to completely work
+    - then setup CI/CD and figure out how to do the production environment

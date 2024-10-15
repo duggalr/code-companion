@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install Docker on Amazon Linux 2023
+# Install Docker on Amazon Linux 2023 (for remote code execution)
 sudo yum update -y
 sudo amazon-linux-extras enable docker
 sudo yum install -y docker
