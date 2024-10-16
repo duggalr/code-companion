@@ -11,8 +11,6 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
   const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_URL;
 
   const _sendCodeExecutionRequest = async function (code) {
-    // const FASTAPI_URL = "http://127.0.0.1:8000/execute_user_code";
-    
     try {
       const payload = {
         language: "python",
@@ -35,7 +33,6 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
 
   const getTaskResponse = async (task_id) => {
     try {
-      // const taskResponseURL = `http://127.0.0.1:8000/result/${task_id}`;
       const taskResponseURL = FASTAPI_BASE_URL + `/result/${task_id}`;
       const resultResponse = await axios.get(taskResponseURL);
       console.log("Result Response:", resultResponse);
@@ -50,7 +47,6 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
 
   const pollForTaskStatus = async (taskId) => {
     try {
-      // const taskStatusURL = `http://127.0.0.1:8000/task/status/${taskId}`;
       const taskStatusURL = FASTAPI_BASE_URL + `/task/status/${taskId}`;
 
       const interval = setInterval(async () => {
@@ -82,13 +78,14 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
   return (
     <div className="flex flex-col h-full mt-2 ml-4 bg-[#F3F4F6] dark:bg-gray-900">
       {/* Console Output Box */}
+      
       <span className="text-gray-500 dark:text-gray-400 text-xs pt-3 pl-1 pb-2 tracking-normal">
-        <span className="font-bold">Note:</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Run your code and the results will be shown in the console below. More language support coming soon!
       </span>
 
       <div className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 dark:border-gray-600 bg-[#f4f5f6] dark:bg-gray-800 text-gray-900">
         {output !== null ? (
-          <p className="text-gray-400 dark:text-gray-500 pt-2 pl-1 text-[14px] tracking-normal font-normal">
+          <p className="text-gray-400 dark:text-gray-500 pt-2 pl-1 text-[14px] tracking-normal font-normal whitespace-pre-wrap">
             <span className="text-blue-400">&gt;&gt;</span> {output}
           </p>
         ) : (
