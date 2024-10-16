@@ -67,6 +67,48 @@ TODO: **need to make a document mapping this out further**
 ws://code-companion-three.vercel.app/ws_handle_chat_response
 https://code-companion-three.vercel.app
 
+{/* TODO: start here and finalize along with fixing the toggle dark/light; test and finalize everything else; then, staging + production + video/blog */}
 
 
-test
+
+
+    // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+    // // Listen to theme changes and update localStorage
+    // useEffect(() => {
+    //     localStorage.setItem('theme', theme);
+    // }, [theme]);
+
+    // useEffect(() => {
+    //   // When the component mounts, read the current theme from localStorage
+    //   const savedTheme = localStorage.getItem('theme') || 'light';
+  
+    //   // Set the editor's theme based on the saved theme
+    //   if (savedTheme === 'dark') {
+    //     monaco.editor.setTheme('minimalistDark');
+    //   } else {
+    //     monaco.editor.setTheme('minimalistLight');
+    //   }
+    // }, []);
+
+
+
+        // // Set the initial theme based on localStorage
+        // const savedTheme = localStorage.getItem('theme') || 'light';
+        // monaco.editor.setTheme(savedTheme === 'dark' ? 'minimalistDark' : 'minimalistLight');
+
+        // // Listen for theme change event
+        // const handleThemeChange = (e) => {
+        //     const newTheme = e.detail;
+        //     monaco.editor.setTheme(newTheme === 'dark' ? 'minimalistDark' : 'minimalistLight');
+        // };
+
+        // window.addEventListener('themeChange', handleThemeChange);
+
+        // // Clean up the event listener when the component unmounts
+        // return () => {
+        //     window.removeEventListener('themeChange', handleThemeChange);
+        // };
+
+
+

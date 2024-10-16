@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 
-// TODO:
-    // setup such that we are sharing states;
-      // first, do for running the python code and go from there...
 
 const CodeEditor = ({ codeState, setCodeState }) => {
 
@@ -112,23 +109,22 @@ const CodeEditor = ({ codeState, setCodeState }) => {
             
         });
 
-        // Set the initial theme based on localStorage
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        monaco.editor.setTheme(savedTheme === 'dark' ? 'minimalistDark' : 'minimalistLight');
+        // Set the initial theme based on the localStorage value
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        console.log('current theme:', currentTheme)
+        monaco.editor.setTheme(currentTheme === 'dark' ? 'minimalistDark' : 'minimalistLight');
 
-        // Listen for theme change event
-        const handleThemeChange = (e) => {
-            const newTheme = e.detail;
-            monaco.editor.setTheme(newTheme === 'dark' ? 'minimalistDark' : 'minimalistLight');
-        };
-
-        // window.addEventListener('themeChange', handleThemeChange);
-
-        // // Clean up the event listener when the component unmounts
-        // return () => {
-        //     window.removeEventListener('themeChange', handleThemeChange);
-        // };
     };
+
+    useEffect(() => {
+
+      const listenStorageChange = () => {
+          const currentTheme = localStorage.getItem('theme') || 'light';
+          monaco.editor.setTheme(currentTheme === 'dark' ? 'minimalistDark' : 'minimalistLight');
+      };
+      window.addEventListener("themeChange", listenStorageChange);
+
+    }, []);
 
     return (
         <div className="h-full w-full border-r-2 border-gray-300">

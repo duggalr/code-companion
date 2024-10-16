@@ -78,14 +78,15 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
   return (
     <div className="flex flex-col h-full mt-2 ml-4 bg-[#F3F4F6] dark:bg-gray-900">
       {/* Console Output Box */}
+      
       <span className="text-gray-500 dark:text-gray-400 text-xs pt-3 pl-1 pb-2 tracking-normal">
-        <span className="font-bold">Note:</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Run your code and the results will be shown in the console below. More language support coming soon!
       </span>
 
       <div className="mt-2 pt-1 pl-2 h-1/2 w-[95%] overflow-y-auto rounded-xl border border-gray-300 dark:border-gray-600 bg-[#f4f5f6] dark:bg-gray-800 text-gray-900">
         {output !== null ? (
           <p className="text-gray-400 dark:text-gray-500 pt-2 pl-1 text-[14px] tracking-normal font-normal whitespace-pre-wrap">
-            {output}
+            <span className="text-blue-400">&gt;&gt;</span> {output}
           </p>
         ) : (
           <p className="text-gray-400 dark:text-gray-500 pt-2 pl-1 text-[14px] tracking-normal font-normal">

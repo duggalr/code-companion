@@ -144,9 +144,10 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
     <div className="flex flex-col h-4/5 dark:bg-gray-900 p-4">
 
       <span className="text-gray-500 dark:text-gray-400 text-xs pt-1 pl-1 pb-4 tracking-normal">
-        <span className="font-bold">
+        {/* <span className="font-bold">
           Note:
-        </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. */}
+        <span className="font-bold">Note:</span> Get help in guiding your thinking through programming problems, with Companion, an AI Tutor.
       </span>
 
       {/* Messages Area */}
@@ -191,14 +192,14 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
           onClick={handleSendMessage}
           disabled={isLoading || !sendBtnEnabled} // Disable when loading or when send button is not enabled
           className={`${sendBtnEnabled && !isLoading ? 
-            "w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all cursor-pointer" : 
-            "w-[100px] py-2 text-[14px] bg-gray-500 cursor-not-allowed font-medium rounded-xl"
+            "w-[100px] py-2 text-[14px] bg-blue-600 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all cursor-pointer" : 
+            "w-[100px] py-2 text-[14px] text-white dark:text-black bg-blue-500 dark:bg-gray-500 cursor-not-allowed font-medium rounded-xl"
           }`}
         >
           {isLoading ? (
             <FontAwesomeIcon icon={faSpinner} spin className="text-white pr-2" />
           ) : (
-            <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-1" />
+            <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-2" />
           )}
           {isLoading ? "" : "Send"}
         </button>
