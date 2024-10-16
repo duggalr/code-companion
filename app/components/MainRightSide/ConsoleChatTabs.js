@@ -57,7 +57,8 @@ const ConsoleChatTabs = ({ codeState, chatMessages, setChatMessages, generatedMe
                 generatedMessage={generatedMessage}
                 setGeneratedMessage={setGeneratedMessage}
                 isGenerating={isGeneratingMessage}
-                setIsGenerating={setIsGeneratingMessage} />}
+                setIsGenerating={setIsGeneratingMessage}
+                codeState={codeState} />}
       </div>
       
     </div>

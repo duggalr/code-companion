@@ -8,14 +8,18 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
   const [taskId, setTaskId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_URL;
+
   const _sendCodeExecutionRequest = async function (code) {
-    const FASTAPI_URL = "http://127.0.0.1:8000/execute_user_code";
+    // const FASTAPI_URL = "http://127.0.0.1:8000/execute_user_code";
+    
     try {
       const payload = {
         language: "python",
         code: code,
       };
-      const response = await axios.post(FASTAPI_URL, payload);
+      
+      const response = await axios.post(FASTAPI_BASE_URL + '/execute_user_code', payload);
       console.log("code-response:", response, response.data);
 
       // Get the task ID from the response
@@ -31,7 +35,8 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
 
   const getTaskResponse = async (task_id) => {
     try {
-      const taskResponseURL = `http://127.0.0.1:8000/result/${task_id}`;
+      // const taskResponseURL = `http://127.0.0.1:8000/result/${task_id}`;
+      const taskResponseURL = FASTAPI_BASE_URL + `/result/${task_id}`;
       const resultResponse = await axios.get(taskResponseURL);
       console.log("Result Response:", resultResponse);
 
@@ -45,7 +50,9 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
 
   const pollForTaskStatus = async (taskId) => {
     try {
-      const taskStatusURL = `http://127.0.0.1:8000/task/status/${taskId}`;
+      // const taskStatusURL = `http://127.0.0.1:8000/task/status/${taskId}`;
+      const taskStatusURL = FASTAPI_BASE_URL + `/task/status/${taskId}`;
+
       const interval = setInterval(async () => {
         const resultResponse = await axios.get(taskStatusURL);
         console.log("Result Response:", resultResponse);

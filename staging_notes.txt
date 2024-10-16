@@ -47,3 +47,18 @@ TODO: **need to make a document mapping this out further**
 # TODO: lambda.chat
     - swap out lambda chat endpoint for new endpoint and test to ensure solid
     - metrics + grafana setup
+
+
+
+     # while True:
+        #     # # Receive data from client
+        #     # data = await websocket.receive_json()
+        #     # # print('Received data:', data)
+        #     async for text in generate_async_response_stream():
+        #         # print('Response', text)
+        #         # print('Is None:', text is None)
+        #         # await websocket.send_text(text)
+        #         if text is None:
+        #             await websocket.send_text('MODEL_GEN_COMPLETE')
+        #         else:
+        #             await websocket.send_text(text)

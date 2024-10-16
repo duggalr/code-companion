@@ -3,12 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faPlay, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
-const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMessage, isGenerating, setIsGenerating }) => {
+const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMessage, isGenerating, setIsGenerating, codeState }) => {
 
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [sendBtnEnabled, setSendBtnEnabled] = useState(false);
+
+  const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_URL;
+  const FASTAPI_WEBSOCKET_URL = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
 
   // Enter Listener
   useEffect(() => {
@@ -16,7 +19,7 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
       if ((event.code === "Enter" || event.code === "NumpadEnter") && !event.shiftKey) {
         console.log("Enter key was pressed without Shift. Run your function.");
         event.preventDefault();
-        // callMyFunction();
+        handleSendMessage();
       }
     };
   
@@ -41,9 +44,10 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
 
   // Web Socket
   useEffect(() => {
-    // Create WebSocket connection
-    const socket = new WebSocket("ws://127.0.0.1:8000/ws_handle_chat_response");
-  
+    // // Create WebSocket connection
+    // const socket = new WebSocket("ws://127.0.0.1:8000/ws_handle_chat_response");
+    const socket = new WebSocket(FASTAPI_WEBSOCKET_URL);
+
     socket.onopen = () => {
       console.log("WebSocket connection established");
     };
@@ -92,15 +96,30 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
 
   const handleSendMessage = () => {
     if (inputValue.trim() !== "" && ws) {
-        const newMessage = { text: inputValue, sender: 'user', type: 'user_message', complete: true };
-        console.log('message:', newMessage);
+      
+      let all_chat_messages_str = "";
+      for (let i = 0; i < messages.length; i++) {
+        // all_chat_messages.push(messages[i].text);
+        all_chat_messages_str += messages[i].text + "\n";
+      }
+      console.log('all-messages:', all_chat_messages_str);
 
-        setSendBtnEnabled(false);
-        setIsLoading(true);
-        
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
-        ws.send(JSON.stringify(newMessage));
-        setInputValue("");
+      const newMessage = {
+        text: inputValue,
+        user_code: codeState,
+        all_user_messages_str: all_chat_messages_str,
+        sender: 'user',
+        type: 'user_message',
+        complete: true
+      };
+      console.log('message:', newMessage);
+
+      setSendBtnEnabled(false);
+      setIsLoading(true);
+
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      ws.send(JSON.stringify(newMessage));
+      setInputValue("");
     }
   };
 
