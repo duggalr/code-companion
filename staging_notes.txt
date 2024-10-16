@@ -67,4 +67,3 @@ TODO: **need to make a document mapping this out further**
 ws://code-companion-three.vercel.app/ws_handle_chat_response
 https://code-companion-three.vercel.app
 
-
