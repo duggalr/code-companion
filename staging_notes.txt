@@ -1,0 +1,49 @@
+TODO:
+- setup celery and redis (<-- literally should be prehooks before application starts)
+- update the env variables accordingly
+
+TODO:
+- run new tests in aws staging and ensure they work
+- from there --> create staging frontend on vercel and link to aws endpoint
+
+**Start here**:
+    - create basic tests for the staging url to ensure it works
+    - from there, setup the staging frontend in vercel as shown below
+        - **get all staging with custom domain complete today**
+
+
+- setup staging for frontend in vercel
+- update urls with .env variables to test the staging api
+- ^get staging to completely work
+    - then setup CI/CD and figure out how to do the production environment
+
+
+
+Staying up to date with all the recent new agents in various benchmarks
+- Starting with:
+    - https://www.swebench.com/index.html
+    - https://github.com/openai/mle-bench/
+Simulations
+Berkeley Hackathon:
+- https://rdi.berkeley.edu/llm-agents-hackathon/tracks/applications_track/
+
+
+TODO: **need to make a document mapping this out further**
+    Write-up for Companion for personal blog + video
+    - writeups for each major release (<-- blogs)
+    -- Write the first version public announcement
+        - The problem, why I built this, the engineering design, tracking user data, next steps/ideas
+
+    -- Writing something every 2 weeks --> Sharing this publicly
+
+    TODO: (looking around)
+    - Take a look of the benchmarking
+        - how is the SWE-bench defined, understanding the benchmark/evaluation
+        - Run it locally and test on models
+
+    - Sharing interesting projects I find
+
+
+# TODO: lambda.chat
+    - swap out lambda chat endpoint for new endpoint and test to ensure solid
+    - metrics + grafana setup
