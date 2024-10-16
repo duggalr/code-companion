@@ -122,12 +122,12 @@ const CodeEditor = ({ codeState, setCodeState }) => {
             monaco.editor.setTheme(newTheme === 'dark' ? 'minimalistDark' : 'minimalistLight');
         };
 
-        window.addEventListener('themeChange', handleThemeChange);
+        // window.addEventListener('themeChange', handleThemeChange);
 
-        // Clean up the event listener when the component unmounts
-        return () => {
-            window.removeEventListener('themeChange', handleThemeChange);
-        };
+        // // Clean up the event listener when the component unmounts
+        // return () => {
+        //     window.removeEventListener('themeChange', handleThemeChange);
+        // };
     };
 
     return (

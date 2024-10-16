@@ -28,11 +28,11 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
   }, []);
   
 
-  // End of Messages
-  useEffect(() => {
-    // Keep the input box always visible at the bottom
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  // // End of Messages
+  // useEffect(() => {
+  //   // Keep the input box always visible at the bottom
+  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [messages]);
   
 
   const [ws, setWs] = useState(null);

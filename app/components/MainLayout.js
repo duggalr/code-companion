@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ResizableBox } from "react-resizable";
 import Editor from "@monaco-editor/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,19 +9,30 @@ import ConsoleChatTabs from "./MainRightSide/ConsoleChatTabs";
 
 
 const MainLayout = () => {
-    const [leftWidth, setLeftWidth] = useState(window.innerWidth / 2); // Initial width for editor
-    // const [consoleOutput, setConsoleOutput] = useState("");
+    // const [leftWidth, setLeftWidth] = useState(window.innerWidth / 2); // Initial width for editor
+    const [leftWidth, setLeftWidth] = useState(720); // Initial width for editor
 
-    // TODO: Parent State
+    // Parent State
     const [editorCode, setEditorCode] = useState("\ndef hello_world():\n    return 'Hello World'\n\nhello_world()\n");
-    
     const [chatMessages, setChatMessages] = useState([
         { text: "Hello, how can I help you?", sender: "bot", complete: true },
     ]);
     const [generatedMessage, setGeneratedMessage] = useState(""); // State to track the streaming message
     const [isGeneratingMessage, setIsGeneratingMessage] = useState(false); // Track whether we're currently generating a response
-
     const [consoleOutput, setConsoleOutput] = useState(null); // To hold the output of the code
+
+    // Hydration state (for rendering the component correctly on initial load)
+    const [isHydrated, setIsHydrated] = useState(false);
+    useEffect(() => {
+        // Set hydration to true after component mounts (on the client-side)
+        setIsHydrated(true);
+        
+    }, []);
+
+    // If not hydrated, return nothing (or a loading spinner)
+    if (!isHydrated) {
+        return null; // or return a loading spinner if desired
+    }
 
     return (
   
@@ -35,8 +46,12 @@ const MainLayout = () => {
             width={leftWidth} // Left side width is controlled by ResizableBox
             height={Infinity}
             axis="x"
-            minConstraints={[window.innerWidth * 0.25, Infinity]} // Min width 25% of window
-            maxConstraints={[window.innerWidth * 0.75, Infinity]} // Max width 75% of window
+            minConstraints={[400, Infinity]}
+            maxConstraints={[900, Infinity]}
+            // minConstraints={[window.innerWidth * 0.25, Infinity]} // Min width 25% of window
+            // maxConstraints={[window.innerWidth * 0.75, Infinity]} // Max width 75% of window
+            // minConstraints=?
+            // maxConstraints=?
             onResizeStop={(e, data) => setLeftWidth(data.size.width)} // Store the new width
             className="relative"
             resizeHandles={["e"]}
