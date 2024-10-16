@@ -62,3 +62,7 @@ TODO: **need to make a document mapping this out further**
         #             await websocket.send_text('MODEL_GEN_COMPLETE')
         #         else:
         #             await websocket.send_text(text)
+
+
+ws://code-companion-three.vercel.app/ws_handle_chat_response
+https://code-companion-three.vercel.app
