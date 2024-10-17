@@ -12,7 +12,7 @@ export default function HeroPrimary() {
 
     const router = useRouter();
     const handleVisitIDEClick = () => {
-        router.push('/');
+        router.push('/playground');
     };
 
     return (

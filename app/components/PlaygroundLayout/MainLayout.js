@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { ResizableBox } from "react-resizable";
-import Editor from "@monaco-editor/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowsAltH } from "@fortawesome/free-solid-svg-icons";
-import Skulpt from "skulpt";
-import CodeEditor from './MainLeftSide/CodeEditor';
-import ConsoleChatTabs from "./MainRightSide/ConsoleChatTabs";
+import CodeEditor from '../MainLeftSide/CodeEditor';
+import ConsoleChatTabs from "../MainRightSide/ConsoleChatTabs";
 
 
 const MainLayout = () => {
@@ -48,10 +46,6 @@ const MainLayout = () => {
             axis="x"
             minConstraints={[400, Infinity]}
             maxConstraints={[900, Infinity]}
-            // minConstraints={[window.innerWidth * 0.25, Infinity]} // Min width 25% of window
-            // maxConstraints={[window.innerWidth * 0.75, Infinity]} // Max width 75% of window
-            // minConstraints=?
-            // maxConstraints=?
             onResizeStop={(e, data) => setLeftWidth(data.size.width)} // Store the new width
             className="relative"
             resizeHandles={["e"]}

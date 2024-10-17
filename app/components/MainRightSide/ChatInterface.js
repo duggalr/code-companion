@@ -6,40 +6,17 @@ import { faPaperPlane, faPlay, faSpinner } from "@fortawesome/free-solid-svg-ico
 const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMessage, isGenerating, setIsGenerating, codeState }) => {
 
   const [inputValue, setInputValue] = useState("");
+  const inputValueRef = useRef("");
+  
   const messagesEndRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [sendBtnEnabled, setSendBtnEnabled] = useState(false);
 
   const FASTAPI_BASE_URL = process.env.NEXT_PUBLIC_FASTAPI_URL;
   const FASTAPI_WEBSOCKET_URL = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
-
-  // Enter Listener
-  useEffect(() => {
-    const listener = (event) => {
-      if ((event.code === "Enter" || event.code === "NumpadEnter") && !event.shiftKey) {
-        console.log("Enter key was pressed without Shift. Run your function.");
-        event.preventDefault();
-        handleSendMessage();
-      }
-    };
+  // const [ws, setWs] = useState(null);
+  const wsRef = useRef(null);
   
-    document.addEventListener("keydown", listener);
-  
-    return () => {
-      document.removeEventListener("keydown", listener);
-    };
-  }, []);
-  
-
-  // // End of Messages
-  // useEffect(() => {
-  //   // Keep the input box always visible at the bottom
-  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [messages]);
-  
-
-  const [ws, setWs] = useState(null);
-
   let accumulatedMessage = "";
 
   // Web Socket
@@ -51,61 +28,68 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
     socket.onopen = () => {
       console.log("WebSocket connection established");
     };
-  
+
     socket.onmessage = (event) => {
       const message = event.data;
-      console.log("Received message:", message);
+      // console.log("Received message:", message);
   
       if (message === "MODEL_GEN_COMPLETE") {
 
-        // When generation is complete, add the final generated message to messages
         setMessages((prevMessages) => [
           ...prevMessages,
-          { text: accumulatedMessage, sender: "bot" }, // Final generated message
+          { text: accumulatedMessage, sender: "bot" },
         ]);
 
-        // Reset the local variable after the update
         setTimeout(() => {
-          accumulatedMessage = ""; // Clear after allowing state update to take effect
+          accumulatedMessage = "";
         }, 0);
 
-        setGeneratedMessage(""); // Clear the generated message state for future use
-        setIsGenerating(false);  // Reset generation state
+        setGeneratedMessage("");
+        setIsGenerating(false);
         setIsLoading(false);
 
       } else {
-        // Keep appending parts of the generated message
+
         accumulatedMessage += message;
         setGeneratedMessage((prevMessage) => prevMessage + message + "");
-        setIsGenerating(true); // Mark that we're generating a response
+        setIsGenerating(true);
 
       }
+
     };
   
     socket.onclose = () => {
       console.log("WebSocket connection closed");
     };
-  
-    setWs(socket); // Save the socket connection
-  
+
+    // setWs(socket);
+    wsRef.current = socket;
+
     return () => {
-      // Cleanup: Close WebSocket connection when component unmounts
       socket.close();
     };
+
   }, []);
 
+
   const handleSendMessage = () => {
-    if (inputValue.trim() !== "" && ws) {
-      
+
+    console.log('user-message:', inputValueRef.current.value, wsRef);
+    const userMessage = inputValueRef.current.value;
+    const wsCurrent = wsRef.current;
+
+    if (userMessage.trim() !== "" && wsCurrent) {
+
+      console.log('user-message-new:', userMessage);
+
       let all_chat_messages_str = "";
       for (let i = 0; i < messages.length; i++) {
-        // all_chat_messages.push(messages[i].text);
         all_chat_messages_str += messages[i].text + "\n";
       }
       console.log('all-messages:', all_chat_messages_str);
 
       const newMessage = {
-        text: inputValue,
+        text: userMessage,
         user_code: codeState,
         all_user_messages_str: all_chat_messages_str,
         sender: 'user',
@@ -118,13 +102,13 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
       setIsLoading(true);
 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
-      ws.send(JSON.stringify(newMessage));
+      wsCurrent.send(JSON.stringify(newMessage));
       setInputValue("");
+
     }
+
   };
 
-  // setSendBtnEnabled
-  // onChange={(e) => setInputValue(e.target.value)}
   const handleNewInputValue = (e) => {
 
     let user_input_message = e.target.value;
@@ -138,15 +122,34 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
 
   };
 
+  // Automatically scroll to the latest message
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isGenerating]);
+
+  // useEffect(() => {
+
+  //   const handleEnterKey = (event) => {
+  //     if ((event.code === "Enter" || event.code === "NumpadEnter") && !event.shiftKey){
+  //       event.preventDefault();
+  //       if ((inputValueRef.current.value).trim() !== "") {
+  //         handleSendMessage();
+  //       }
+  //     }
+  //   };
+
+  //   document.addEventListener("keydown", handleEnterKey);
+  //   return () => {
+  //     document.removeEventListener('keydown', handleEnterKey);
+  //   };
+
+  // }, []);
 
   return (
 
     <div className="flex flex-col h-4/5 dark:bg-gray-900 p-4">
 
       <span className="text-gray-500 dark:text-gray-400 text-xs pt-1 pl-1 pb-4 tracking-normal">
-        {/* <span className="font-bold">
-          Note:
-        </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. */}
         <span className="font-bold">Note:</span> Get help in guiding your thinking through programming problems, with Companion, an AI Tutor.
       </span>
 
@@ -179,6 +182,7 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
       <div className="flex items-center border-t border-gray-300 dark:border-gray-600 pt-2 mt-2">
         
         <textarea
+          ref={inputValueRef}
           value={inputValue}
           // onChange={(e) => setInputValue(e.target.value)}
           onChange={(e) => handleNewInputValue(e)}
@@ -203,78 +207,6 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
           )}
           {isLoading ? "" : "Send"}
         </button>
-
-
-        {/* <button
-          onClick={handleSendMessage}
-          // disabled={isLoading} // Disable button when loading
-          disabled={sendBtnEnabled}
-          className={`${sendBtnEnabled ? 
-            "w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all cursor-pointer"
-            : 
-            "w-[100px] py-2 text-[14px] bg-gray-500 cursor-not-allowed font-medium rounded-xl"
-          }`}
-          // className={`${(isLoading) ? "w-[100px] py-2 text-[14px] bg-blue-500 cursor-not-allowed font-medium rounded-xl" : "w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"}`}
-          // className="w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"
-        >
-
-          {isLoading ? (
-            <FontAwesomeIcon icon={faSpinner} spin className="text-white pr-2" />
-          ) : (
-            <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-1" />
-          )}
-          {isLoading ? "" : "Send"}
-
-        </button> */}
-        {/* sendBtnEnabled, setSendBtnEnabled */}
-
-
-        {/* {
-          inputValue.trim().length > 0 ? (
-
-            <button
-              onClick={handleSendMessage}
-              disabled={isLoading} // Disable button when loading
-              className={`${isLoading ? "w-[100px] py-2 text-[14px] bg-blue-500 cursor-not-allowed font-medium rounded-xl" : "w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"}`}
-              // className="w-[100px] py-2 text-[14px] bg-blue-500 text-white opacity-90 font-medium rounded-xl hover:bg-blue-700 transition-all"
-            >
-
-              {isLoading ? (
-                <FontAwesomeIcon icon={faSpinner} spin className="text-white pr-2" />
-              ) : (
-                <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-1" />
-              )}
-              {isLoading ? "" : "Send"}
-
-            </button>
-
-          ) : (
-
-            <button
-              onClick={handleSendMessage}
-              disabled={true}
-              className="w-[100px] mr-2 py-2 text-[14px] bg-gray-500 opacity-90 cursor-not-allowed font-medium rounded-xl"
-            >
-              <FontAwesomeIcon icon={faPaperPlane} className="text-white pr-2" />
-              Send
-            </button>
-
-          )
-        } */}
-
-        {/* <button
-          onClick={handleSendMessage}
-          disabled={isLoading} // Disable button when loading
-          className={`w-[110px] py-2 text-[14px] text-white font-medium rounded-xl transition-all 
-            ${isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-700"}`}
-        >
-          {isLoading ? (
-            <FontAwesomeIcon icon={faSpinner} spin className="text-white pr-2" />
-          ) : (
-            <FontAwesomeIcon icon={faPlay} className="text-white pr-1" />
-          )}
-          {isLoading ? "" : "Send"}
-        </button> */}
 
       </div>
 

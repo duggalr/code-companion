@@ -70,8 +70,6 @@ https://code-companion-three.vercel.app
 {/* TODO: start here and finalize along with fixing the toggle dark/light; test and finalize everything else; then, staging + production + video/blog */}
 
 
-
-
     // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     // // Listen to theme changes and update localStorage
@@ -109,6 +107,3 @@ https://code-companion-three.vercel.app
         // return () => {
         //     window.removeEventListener('themeChange', handleThemeChange);
         // };
-
-
-
