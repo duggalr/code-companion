@@ -124,11 +124,9 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
 
   // Automatically scroll to the latest message
   useEffect(() => {
-    // TODO: 
-    // if (messages.length > 0) {
-    //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    // }
-    // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages.length > 1) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, isGenerating]);
 
   // // TODO: Handle Enter key press to send messages
