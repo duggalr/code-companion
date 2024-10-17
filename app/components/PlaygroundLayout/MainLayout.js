@@ -13,7 +13,14 @@ const MainLayout = () => {
     // Parent State
     const [editorCode, setEditorCode] = useState("\ndef hello_world():\n    return 'Hello World'\n\nhello_world()\n");
     const [chatMessages, setChatMessages] = useState([
-        { text: "Hello, how can I help you?", sender: "bot", complete: true },
+        // { text: "Hello, how can I help you?", sender: "bot", complete: true },
+        {
+            text: `Welcome! 😄 I'm Companion, your personal programming tutor.
+
+If you are running into a problem such as a bug in your code, a LeetCode problem, or need help understanding a concept, ask me and I will be more than happy to help.`,
+            sender: "bot",
+            complete: true
+        }
     ]);
     const [generatedMessage, setGeneratedMessage] = useState(""); // State to track the streaming message
     const [isGeneratingMessage, setIsGeneratingMessage] = useState(false); // Track whether we're currently generating a response

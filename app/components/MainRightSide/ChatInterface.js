@@ -124,9 +124,14 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
 
   // Automatically scroll to the latest message
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // TODO: 
+    // if (messages.length > 0) {
+    //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // }
+    // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isGenerating]);
 
+  // // TODO: Handle Enter key press to send messages
   // useEffect(() => {
 
   //   const handleEnterKey = (event) => {
@@ -162,7 +167,7 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
               msg.sender === "user"
                 ? "self-end bg-blue-400 text-white"
                 : "self-start bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-            } p-3 rounded-lg w-full max-w-full break-words text-[13px]`}
+            } p-3 rounded-lg w-full max-w-full break-words text-[13px] whitespace-pre-wrap`}
           >
             {msg.text}
           </div>
