@@ -18,7 +18,6 @@ const ConsoleChatTabs = ({ codeState, chatMessages, setChatMessages, generatedMe
               <li class="me-2">
                   <a 
                   // class="inline-block p-0 px-6 pb-2 pt-3 text-gray-700 border-b-2 border-gray-300 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 cursor-pointer"
-                  
                   // className={`inline-block p-0 px-6 pb-2 pt-3 text-gray-500 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 cursor-pointer ${activeTab === "console" ? "border-b-2 border-gray-300 text-gray-700 " : ""}`}
                   className={`inline-block p-0 px-6 pb-2 pt-3 text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:text-gray-700 rounded-t-lg active dark:border-blue-500 cursor-pointer ${activeTab === "console" ? "border-b-2 border-gray-300 text-gray-800 dark:text-blue-500 dark:border-blue-500" : ""}`}
                   aria-current="page"
@@ -49,7 +48,6 @@ const ConsoleChatTabs = ({ codeState, chatMessages, setChatMessages, generatedMe
       </div>
 
       {/* Content */}
-      {/* bg-white dark:bg-gray-800 */} {/* <div className="flex-grow overflow-auto"> */}
       <div className="flex-grow overflow-y-scroll no-scrollbar">
         {activeTab === "console" && <ConsoleOutput codeState={codeState} output={consoleOutput} setOutput={setConsoleOutput} />}
         {activeTab === "chat" && <ChatInterface messages={chatMessages}

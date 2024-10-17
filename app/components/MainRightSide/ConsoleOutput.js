@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
+
 const ConsoleOutput = ({ codeState, output, setOutput }) => {
   const [taskId, setTaskId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -77,8 +78,8 @@ const ConsoleOutput = ({ codeState, output, setOutput }) => {
 
   return (
     <div className="flex flex-col h-full mt-2 ml-4 bg-[#F3F4F6] dark:bg-gray-900">
+
       {/* Console Output Box */}
-      
       <span className="text-gray-500 dark:text-gray-400 text-xs pt-3 pl-1 pb-2 tracking-normal">
         Run your code and the results will be shown in the console below. More language support coming soon!
       </span>

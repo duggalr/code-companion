@@ -1,6 +1,3 @@
-// import { Button } from 'shadcdn';
-// import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Image from 'next/image';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode } from "@fortawesome/free-solid-svg-icons";

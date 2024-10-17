@@ -21,8 +21,7 @@ const ChatInterface = ({ messages, setMessages, generatedMessage, setGeneratedMe
 
   // Web Socket
   useEffect(() => {
-    // // Create WebSocket connection
-    // const socket = new WebSocket("ws://127.0.0.1:8000/ws_handle_chat_response");
+    // Create WebSocket connection
     const socket = new WebSocket(FASTAPI_WEBSOCKET_URL);
 
     socket.onopen = () => {

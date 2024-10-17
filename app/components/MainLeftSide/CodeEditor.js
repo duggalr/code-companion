@@ -1,38 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Editor from "@monaco-editor/react";
 
 
 const CodeEditor = ({ codeState, setCodeState }) => {
 
-    // const [editorCode, setEditorCode] = useState("\ndef hello_world():\n    return 'Hello World'\n\nhello_world()\n");
-
     const handleEditorDidMount = (editor, monaco) => {
         // Define the light theme
         monaco.editor.defineTheme('minimalistLight', {
-            
-            // base: 'vs', // inherit from vs (light theme)
-            // inherit: true,
-            // rules: [
-            //     { token: 'comment', foreground: 'a0a0a0', fontStyle: 'italic' }, 
-            //     { token: 'keyword', foreground: '4A90E2' }, 
-            //     { token: 'identifier', foreground: '333333' }, 
-            //     { token: 'string', foreground: 'E67E22' }, 
-            //     { token: 'number', foreground: '8E44AD' }, 
-            //     { token: 'delimiter', foreground: '95A5A6' }, 
-            //     { token: 'type', foreground: '2ECC71' }, 
-            // ],
-            // colors: {
-            //     'editor.background': '#F9FAFB', 
-            //     'editor.foreground': '#2C3E50', 
-            //     'editorLineNumber.foreground': '#95A5A6', 
-            //     'editorCursor.foreground': '#E74C3C', 
-            //     'editor.selectionBackground': '#D6EAF8', 
-            //     'editor.inactiveSelectionBackground': '#EBF5FB', 
-            //     'editor.lineHighlightBackground': '#e7eaeb', 
-            //     'editorBracketMatch.background': '#82E0AA', 
-            //     'editorWhitespace.foreground': '#D5D8DC', 
-            // }
-
             base: 'vs-dark', // inherit from vs-dark (dark theme)
             inherit: true,
             rules: [
@@ -55,35 +29,10 @@ const CodeEditor = ({ codeState, setCodeState }) => {
                 'editorBracketMatch.background': '#515A6B', 
                 'editorWhitespace.foreground': '#3B3B3B', 
             }
-
         });
 
         // Define the dark theme
         monaco.editor.defineTheme('minimalistDark', {
-            
-            // base: 'vs-dark', // inherit from vs-dark (dark theme)
-            // inherit: true,
-            // rules: [
-            //     { token: 'comment', foreground: '6A737D', fontStyle: 'italic' }, 
-            //     { token: 'keyword', foreground: '569CD6' }, 
-            //     { token: 'identifier', foreground: 'D4D4D4' }, 
-            //     { token: 'string', foreground: 'CE9178' }, 
-            //     { token: 'number', foreground: 'B5CEA8' }, 
-            //     { token: 'delimiter', foreground: '808080' }, 
-            //     { token: 'type', foreground: '4EC9B0' }, 
-            // ],
-            // colors: {
-            //     'editor.background': '#1E1E1E', 
-            //     'editor.foreground': '#D4D4D4', 
-            //     'editorLineNumber.foreground': '#858585', 
-            //     'editorCursor.foreground': '#AEAFAD', 
-            //     'editor.selectionBackground': '#264F78', 
-            //     'editor.inactiveSelectionBackground': '#2C2C2C', 
-            //     'editor.lineHighlightBackground': '#2D2D30', 
-            //     'editorBracketMatch.background': '#515A6B', 
-            //     'editorWhitespace.foreground': '#3B3B3B', 
-            // }
-
             base: 'vs-dark', // inherit from vs-dark (dark theme)
             inherit: true,
             rules: [
@@ -106,14 +55,12 @@ const CodeEditor = ({ codeState, setCodeState }) => {
                 'editorBracketMatch.background': '#516B80', 
                 'editorWhitespace.foreground': '#3B3B3B', 
             }
-            
         });
 
         // Set the initial theme based on the localStorage value
         const currentTheme = localStorage.getItem('theme') || 'light';
         console.log('current theme:', currentTheme)
         monaco.editor.setTheme(currentTheme === 'dark' ? 'minimalistDark' : 'minimalistLight');
-
     };
 
     useEffect(() => {
